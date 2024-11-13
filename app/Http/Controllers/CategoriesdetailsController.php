@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CategoriesdetailsCoontroller extends Controller
+class CategoriesdetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
