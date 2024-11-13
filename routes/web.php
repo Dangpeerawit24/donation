@@ -22,7 +22,7 @@ use App\Http\Controllers\FormcampaighallController;
 use App\Http\Controllers\FormcampaighgiveController;
 
 
-// Route::get('/', function () { return view('welcome');});
+Route::get('/login', function () { return view('auth.login');});
 
 // Line App
 Route::get('/line/login', [LineLoginController::class, 'redirectToLine'])->name('line.login');
