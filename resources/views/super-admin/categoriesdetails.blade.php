@@ -28,10 +28,10 @@
                     <tbody>
                         @foreach ($categoriesdetails as $index => $category)
                             <tr>
-                                <td style="text-align:center">{{ $index + 1 }}</td>
-                                <td>{{ $category->name }}</td>
-                                <td style="text-align:center">{{ $category->total_value }}</td>
-                                <td style="text-align:center">{{ $category->total_value_price }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $index + 1 }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $category->name }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $category->total_value }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $category->total_value_price }}</td>
                             </tr>
                         @endforeach
                     </tbody>
