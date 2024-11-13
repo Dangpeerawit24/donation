@@ -30,11 +30,11 @@
                     <tbody>
                         @foreach ($categories as $index => $category)
                             <tr>
-                                <td style="text-align:center">{{ $index + 1 }}</td>
-                                <td>{{ $category->name }}</td>
-                                <td style="text-align:center">{{ $category->total_campaigns }}</td>
-                                <td style="text-align:center">{{ $category->total_value_price }}</td>
-                                <td style="text-align:center">
+                                <td style="text-align:center; align-content: center;">{{ $index + 1 }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $category->name }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $category->total_campaigns }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $category->total_value_price }}</td>
+                                <td style="text-align:center; align-content: center;">
                                     <!-- ปุ่มสำหรับเปิด Modal แก้ไข -->
                                     <a href="{{ url('super-admin/categoriesdetails?categoriesID=' . $category->id . '&name=' .$category->name) }}" class="btn btn-primary">
                                         ดูรายการกองบุญ
