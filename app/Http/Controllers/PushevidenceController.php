@@ -63,7 +63,7 @@ class PushevidenceController extends Controller
         }
 
         // URL ของรูปภาพที่อัปโหลด
-        $imageUrl = asset('public/img/pushimg/' . $fileName);
+        $imageUrl = asset('img/pushimg/' . $fileName);
 
         // อัปเดตข้อมูลในตาราง campaign_transactions
         $updated = DB::table('campaign_transactions')
