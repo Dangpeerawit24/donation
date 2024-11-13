@@ -9,7 +9,6 @@
     <title>ระบบกองบุญออนไลน์</title>
     <link rel="icon" type="" href="{{ asset('img/AdminLogo.png') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 </head>
@@ -54,7 +53,7 @@
                             <h5 style="color: var(--bs-emphasis-color);font-weight: bold;">แนบหลักฐานการโอนเงิน</h5>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="margin-top: 2px;"><input
-                                class="form-control" type="file" name="evidence" required></div>
+                                class="form-control" type="file" id="evidence" name="evidence" required></div>
                         <input type="hidden" id="campaignsid" name="campaignsid" value="{{ $data['campaign']->id }}">
                         <input type="hidden" id="campaignsname" name="campaignsname"
                             value="{{ $data['campaign']->name }}">
@@ -63,8 +62,8 @@
                         <input type="hidden" name="transactionID"
                             value="TX-{{ now()->timestamp }}-{{ rand(1000, 9999) }}">
                         <div class="d-flex justify-content-center align-items-center"
-                            style="margin-top: 12px;margin-bottom: px;"><button class="btn btn-primary"
-                                type="submit">ยืนยันส่งข้อมูล</button></div>
+                            style="margin-top: 12px;margin-bottom: px;"><button class="btn btn-primary" type="bottom"
+                                onclick="submitForm()">ยืนยันส่งข้อมูล</button></div>
                     </form>
                     @endforeach
                 </div>
@@ -137,113 +136,160 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <script>
-    function fetchDonationDetails() {
-    fetch('/fetch_formcampaighall_details')
-        .then(response => response.json())
-        .then(details => {
-            // ลบข้อมูลเก่าก่อนเพิ่มใหม่
-            const donationInputsContainer = document.getElementById('donationInputs');
-            donationInputsContainer.innerHTML = '';
+    let cachedDetails = null; // ตัวแปรสำหรับเก็บข้อมูลที่ดึงมา
+    const pricePerUnit = {{ $campaignData[0]['campaign']->price ?? 0 }}; // กำหนดราคาต่อหน่วยจาก Blade
 
-            // สร้าง dropdown สำหรับเลือกผู้บริจาค
-            const inputDiv = document.createElement('div');
-            inputDiv.className = 'input-container';
+    // ดึงข้อมูลล่วงหน้าเมื่อหน้าเว็บโหลด
+    window.onload = function() {
+        fetch('/fetch_formcampaigh_details')
+            .then(response => response.json())
+            .then(details => {
+                cachedDetails = details; // เก็บข้อมูลใน cache
+                console.log('ข้อมูลที่ดึงมา:', cachedDetails); // ตรวจสอบข้อมูล
+            })
+            .catch(error => console.error('Error fetching details:', error));
+    };
 
-            let options = `<select name="name[]" id="donorName" onchange="checkNewEntry(this)" style="width: 100%; text-align: center; height: 45.4286px;" required>
-                            <option value="">--กดเลือกรายนามที่เคยร่วมบุญ--</option>`;
+    function createInputFields(index) {
+        const inputDiv = document.createElement('div');
+        inputDiv.className = 'input-container';
 
-            details.forEach(detail => {
-                options += `<option value="${detail}">${detail}</option>`;
-            });
+        // สร้าง Select ตัวเลือก
+        let options = `<select name="name[]" id="donorName${index}" onchange="checkNewEntry(this, ${index})" style="width: 100%; text-align: center; height: 45.4286px;" required>
+                        <option value="">--กดเลือกรายนามที่เคยร่วมบุญ--</option>`;
 
-            options += `<option value="new">เพิ่มรายการใหม่</option></select>`;
+        // ใช้ข้อมูลจาก cachedDetails ในการสร้างตัวเลือก
+        cachedDetails.forEach(detail => {
+            options += `<option value="${detail}">${detail}</option>`;
+        });
 
-            // สร้างช่อง input สำหรับกรอกชื่อใหม่ (ซ่อนอยู่)
-            const newInput =
-                `<input type="text" name="newName[]" id="newDonorName" style="width: 100%; text-align: center; height: 45.4286px; align-content: center; display: none;" placeholder="ชื่อ-นามสกุล" required>`;
+        // เพิ่มตัวเลือก "เพิ่มข้อมูลใหม่"
+        options += `<option value="new">เพิ่มรายการใหม่</option></select>`;
 
-            // รวม dropdown และ input ไว้ใน div
-            inputDiv.innerHTML = `<label for="donorName">กรอกชื่อ-นามสกุล</label>` + options + newInput;
+        // สร้าง Input สำหรับกรอกข้อมูลใหม่
+        const newInput =
+            `<input type="text" name="newName[]" id="newDonorName" style="width: 100%; text-align: center; height: 45.4286px; align-content: center; display: none;" placeholder="ชื่อ-นามสกุล" required>`;
 
-            // เพิ่ม div ลงใน container
-            donationInputsContainer.appendChild(inputDiv);
-        })
-        .catch(error => console.error('Error:', error));
-}
+        // รวม Select และ Input เข้าใน Div
+        inputDiv.innerHTML = `<label for="donorName${index}">กรอกชื่อ-นามสกุล ชุดที่ ${index + 1}</label>` + options +
+            newInput;
 
+        // เพิ่ม Div ลงใน Container
+        document.getElementById('donationInputs').appendChild(inputDiv);
+    }
+
+
+// ฟังก์ชันอัปเดตกล่องข้อความและคำนวณยอดเงินรวม
 function updateDonationInputs() {
-    const count = document.getElementById('donationCount').value;
-    const donationInputsContainer = document.getElementById('donationInputs');
+        const count = parseInt(document.getElementById('donationCount').value, 10); // จำนวนที่ป้อน
+        const donationInputsContainer = document.getElementById('donationInputs');
+        donationInputsContainer.innerHTML = ''; // ลบกล่องข้อความเก่าทั้งหมด
 
-    // ลบช่อง input เก่าก่อนเพิ่มช่องใหม่
-    donationInputsContainer.innerHTML = '';
+        // ตรวจสอบว่าจำนวนที่เลือกเป็นตัวเลขบวก
+        if (!isNaN(count) && count > 0) {
+            const totalAmount = count * pricePerUnit; // คำนวณยอดรวม
+            document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
 
-    // ตรวจสอบว่าจำนวนที่กรอกเป็น 0 หรือไม่
-    if (count > 0) {
-        // เรียกฟังก์ชัน fetch เพื่อเพิ่มช่องกรอกข้อมูลเพียง 1 ชุด
-        fetchDonationDetails();
-    }
-
-    // คำนวณยอดรวม
-    @foreach ($campaignData as $data)
-    const pricePerUnit = {{ $data['campaign']->price }};
-    @endforeach
-    const totalAmount = count * pricePerUnit;
-    document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
-}
-
-function checkNewEntry(select) {
-    const newInput = document.getElementById('newDonorName');
-    if (select.value === "new") {
-        newInput.style.display = 'block';
-        newInput.required = true;
-        newInput.value = ''; // ล้างค่าเมื่อเลือกเพิ่มใหม่
-    } else {
-        newInput.style.display = 'none';
-        newInput.required = false;
-    }
-}
-
-function validateForm() {
-    let isValid = true;
-
-    document.querySelectorAll('input[name="newName[]"]').forEach(input => {
-        if (input.style.display === 'block' && !input.value.trim()) {
-            isValid = false;
-            input.setCustomValidity("กรุณากรอกชื่อ-นามสกุล");
+            // ตรวจสอบว่ามีข้อมูลใน cachedDetails ก่อนสร้างกล่องข้อความ
+            if (cachedDetails) {
+                for (let i = 0; i < count; i++) {
+                    createInputFields(i);
+                }
+            } else {
+                console.error('ยังไม่มีข้อมูลใน cachedDetails');
+            }
         } else {
-            input.setCustomValidity("");
+            document.getElementById('totalAmountDisplay').innerText = "0.00 บาท"; // หากจำนวนไม่ถูกต้อง
+        }
+    }
+
+    function checkNewEntry(select, index) {
+        const newInput = document.getElementById(`newDonorName${index}`);
+        if (select.value === "new") {
+            newInput.style.display = 'block';
+            newInput.required = true;
+            newInput.value = ''; // รีเซ็ตค่า Input
+        } else {
+            newInput.style.display = 'none';
+            newInput.required = false;
+        }
+    }
+
+    function validateForm() {
+        let isValid = true;
+
+        document.querySelectorAll('input[name="newName[]"]').forEach(input => {
+            if (input.style.display === 'block' && !input.value.trim()) {
+                isValid = false;
+                input.setCustomValidity("กรุณากรอกชื่อ-นามสกุล");
+            } else {
+                input.setCustomValidity("");
+            }
+        });
+
+        return isValid;
+    }
+
+    document.querySelector('form').addEventListener('submit', function (e) {
+        if (!validateForm()) {
+            e.preventDefault(); // Prevent form submission if validation fails.
+            swal("กรุณากรอกข้อมูลให้ครบถ้วน", "", "error");
         }
     });
+	
+	function copyToClipboard(id) {
+        const inputField = document.getElementById(id);
 
-    return isValid;
-}
+        if (!inputField) {
+            swal("เกิดข้อผิดพลาด!", "ไม่พบช่องที่ต้องการคัดลอก", "error");
+            return;
+        }
 
-document.querySelector('form').addEventListener('submit', function(e) {
-    if (!validateForm()) {
-        e.preventDefault(); // ยกเลิกการ submit ถ้าการตรวจสอบไม่ผ่าน
-        swal("กรุณากรอกข้อมูลให้ครบถ้วน", "", "error");
+        navigator.clipboard.writeText(inputField.value)
+            .then(() => {
+                swal("คัดลอกสำเร็จ!", "คัดลอกหมายเลขบัญชี: " + inputField.value, "success");
+            })
+            .catch(err => {
+                swal("เกิดข้อผิดพลาด!", "ไม่สามารถคัดลอกข้อความได้", "error");
+                console.error("Error copying text: ", err);
+            });
     }
-});
 
-function copyToClipboard(id) {
-    const inputField = document.getElementById(id);
+    function submitForm() {
+    const fileInput = document.getElementById('evidence');
+    const donorInputs = document.querySelectorAll('[id^="donorName"], [id^="newDonorName"]');
 
-    if (!inputField) {
-        swal("เกิดข้อผิดพลาด!", "ไม่พบช่องที่ต้องการคัดลอก", "error");
-        return;
-    }
+    // ตรวจสอบว่าทุกช่องที่มองเห็นได้ถูกกรอก
+    const allInputsFilled = Array.from(donorInputs).every(input => {
+        if (input.style.display !== 'none') {
+            return input.value.trim() !== ""; // ตรวจเฉพาะช่องที่แสดงอยู่
+        }
+        return true; // ข้ามช่องที่ซ่อนอยู่
+    });
 
-    navigator.clipboard.writeText(inputField.value)
-        .then(() => {
-            swal("คัดลอกสำเร็จ!", "คัดลอกหมายเลขบัญชี: " + inputField.value, "success");
-        })
-        .catch(err => {
-            swal("เกิดข้อผิดพลาด!", "ไม่สามารถคัดลอกข้อความได้", "error");
-            console.error("Error copying text: ", err);
+    if (fileInput.files.length === 0 || !allInputsFilled) {
+        swal({
+            title: "กรุณากรอกข้อมูลให้ครบ",
+            text: "คุณยังไม่ได้เลือกไฟล์ หรือกรอกข้อมูลในทุกช่อง กรุณาตรวจสอบอีกครั้ง",
+            icon: "warning",
+            button: "ตกลง"
         });
-}
+    } else {
+        swal({
+            title: "กำลังประมวลผล",
+            text: "กรุณารอสักครู่...",
+            icon: "info",
+            buttons: false,
+            closeOnClickOutside: false,
+            closeOnEsc: false
+        });
 
+        // เพิ่มดีเลย์เล็กน้อยก่อนส่งฟอร์ม
+        setTimeout(() => {
+            document.getElementById("uploadForm").submit();
+        }, 1000); // ดีเลย์ 1 วินาที
+    }
+}
 </script>
 
 </html>

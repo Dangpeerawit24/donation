@@ -7,6 +7,43 @@
     <title>ระบบกองบุญออนไลน์</title>
     <link rel="icon" type="" href="{{asset('img/AdminLogo.png')}}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        /* Loader Styles */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden; /* ซ่อน Loader โดยค่าเริ่มต้น */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #loader.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 
 <body style="background-color: var(--bs-danger-text-emphasis);">
@@ -55,5 +92,28 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const loader = document.getElementById('loader');
+
+        // ซ่อน Loader เมื่อกลับมายังหน้าโดยใช้ปุ่ม Back ของเบราว์เซอร์
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
+                loader.classList.remove('show');
+            }
+        });
+
+        // แสดง Loader เมื่อคลิกลิงก์
+        document.addEventListener('click', function (e) {
+            if (e.target.tagName === 'A' && e.target.href) {
+                e.preventDefault(); // ป้องกัน Default Action
+                loader.classList.add('show'); // แสดง Loader
+                setTimeout(() => {
+                    window.location.href = e.target.href; // เปลี่ยนหน้า
+                }, 300); // เพิ่มดีเลย์เพื่อให้เห็นแอนิเมชัน
+            }
+        });
+    });
+</script>
 
 </html>

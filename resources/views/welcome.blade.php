@@ -1,16 +1,57 @@
-{{-- @dd($profile) --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบกองบุญออนไลน์</title>
-    <link rel="icon" type="" href="{{asset('img/AdminLogo.png')}}" />
+    <link rel="icon" type="" href="{{ asset('img/AdminLogo.png') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        /* Loader Styles */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden; /* ซ่อน Loader โดยค่าเริ่มต้น */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #loader.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body style="background-color: var(--bs-danger-text-emphasis);">
+    <!-- Loader -->
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
     <nav class="navbar navbar-expand-md bg-body py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
@@ -56,18 +97,39 @@
         @endforeach
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</script>
-@if(session('success'))
 <script>
-    Swal.fire({
-        icon: 'success',
-        title: 'ขออนุโมทนาบุญกับคุณ<br>{{ session('lineName') }}',
-        text: 'ที่ได้ร่วมกองบุญ {{ session('campaignname') }} เรียบร้อยแล้ว',
-        timer: 5000,
-        showConfirmButton: false
+    document.addEventListener("DOMContentLoaded", function () {
+        const loader = document.getElementById('loader');
+
+        // ซ่อน Loader เมื่อกลับมายังหน้าโดยใช้ปุ่ม Back ของเบราว์เซอร์
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
+                loader.classList.remove('show');
+            }
+        });
+
+        // แสดง Loader เมื่อคลิกลิงก์
+        document.addEventListener('click', function (e) {
+            if (e.target.tagName === 'A' && e.target.href) {
+                e.preventDefault(); // ป้องกัน Default Action
+                loader.classList.add('show'); // แสดง Loader
+                setTimeout(() => {
+                    window.location.href = e.target.href; // เปลี่ยนหน้า
+                }, 300); // เพิ่มดีเลย์เพื่อให้เห็นแอนิเมชัน
+            }
+        });
     });
+
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'ขออนุโมทนาบุญกับคุณ<br>{{ session('lineName') }}',
+            text: 'ที่ได้ร่วมกองบุญ {{ session('campaignname') }} เรียบร้อยแล้ว',
+            timer: 5000,
+            showConfirmButton: false
+        });
+    @endif
 </script>
-@endif
+
 </body>
 </html>
