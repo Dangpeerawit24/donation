@@ -52,7 +52,7 @@ class PushevidenceController extends Controller
         $validated = $request->validate([
             'transactionID' => 'required|string',
             'userid' => 'required|string',
-            'url_img' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+            'url_img' => 'required|file|mimes:jpeg,png,jpg|max:7048',
         ]);
 
         // จัดการไฟล์อัปโหลด
