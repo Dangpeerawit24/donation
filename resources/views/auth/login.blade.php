@@ -9,7 +9,7 @@
 <body class="bg-blue-500 flex items-center justify-center min-h-screen">
     <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-sm">
         <div class="text-center">
-            <img src="{{asset('public/img/Adminlogo.png')}}" alt="Logo" class="mx-auto w-20 h-20 mb-4">
+            <img src="{{asset('img/Adminlogo.png')}}" alt="Logo" class="mx-auto w-20 h-20 mb-4">
             <h1 class="text-xl font-bold text-gray-700">ระบบจัดการกองบุญ</h1>
             <h2 class="text-lg font-semibold text-gray-600">Kuanim_Tungpichai</h2>
             <p class="text-gray-500 mb-6">Please Login</p>

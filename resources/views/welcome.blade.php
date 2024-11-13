@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบกองบุญออนไลน์</title>
-    <link rel="icon" type="" href="{{asset('public/img/AdminLogo.png')}}" />
+    <link rel="icon" type="" href="{{asset('img/AdminLogo.png')}}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -14,7 +14,7 @@
     <nav class="navbar navbar-expand-md bg-body py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <img width="40" height="40" src="{{ asset('public/img/AdminLogo.png') }}" />
+                <img width="40" height="40" src="{{ asset('img/AdminLogo.png') }}" />
                 <span style="font-size: 14px;font-weight: bold;">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</span>
             </a>
             <a class="btn btn-primary" role="button" href="{{ url('campaignstatus?userId=' . $profile['userId']) }}" style="font-size: 13px;">สถานะ</a>
@@ -31,7 +31,7 @@
             <div class="card mb-3 mt-4">
                 <div class="card-body">
                     <div class="text-center">
-                        <img src="{{ asset('public/img/campaign/' . $campaign->campaign_img) }}" class="rounded" width="300" height="300" alt="Campaign Image">
+                        <img src="{{ asset('img/campaign/' . $campaign->campaign_img) }}" class="rounded" width="300" height="300" alt="Campaign Image">
                     </div>
                     <h4 class="text-center my-3 "><strong>กองบุญ{{ $campaign->name }}</strong></h4>
                     <p class="text-center text-muted">{{ $campaign->description }}</p>

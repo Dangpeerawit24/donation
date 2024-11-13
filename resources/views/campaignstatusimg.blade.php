@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>CampaignKuanimTungpichai</title>
-    <link rel="icon" type="" href="{{ asset('public/img/AdminLogo.png') }}" />
+    <link rel="icon" type="" href="{{ asset('img/AdminLogo.png') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 
@@ -14,7 +14,7 @@
     <div>
         <nav class="navbar navbar-expand-md bg-body py-3">
             <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><img
-                        width="40" height="40" src="{{ asset('public/img/AdminLogo.png') }}" /><span
+                        width="40" height="40" src="{{ asset('img/AdminLogo.png') }}" /><span
                         style="font-size: 14px;font-weight: bold;">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</span></a><a
                     class="btn btn-primary" role="button" style="font-size: 13px;" href="/">หน้าหลัก</a>
             </div>

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบกองบุญออนไลน์</title>
-    <link rel="icon" type="" href="{{ asset('public/img/AdminLogo.png') }}" />
+    <link rel="icon" type="" href="{{ asset('img/AdminLogo.png') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
@@ -20,7 +20,7 @@
         <div class="container d-flex justify-content-center align-items-center" style="height: 60px;">
             <h1 class="d-flex justify-content-center align-items-center"
                 style="color: var(--bs-body-bg);font-size: 20.88px;margin: 8px;"><img width="40" height="40"
-                    src="{{ asset('public/img/AdminLogo.png') }}">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</h1>
+                    src="{{ asset('img/AdminLogo.png') }}">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</h1>
         </div>
     </div>
     <div class="text-center">
