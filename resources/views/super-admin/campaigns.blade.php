@@ -35,7 +35,7 @@
                                 <td style="text-align:center">{{ $index + 1 }}</td>
                                 <td style="text-align:center">
                                     @if ($campaign->campaign_img)
-                                        <img src="{{ asset('public/img/campaign/' . $campaign->campaign_img) }}" alt="Campaign Image" width="100px" height="100px">
+                                        <img src="{{ asset('img/campaign/' . $campaign->campaign_img) }}" alt="Campaign Image" width="100px" height="100px">
                                     @else
                                         No Image
                                     @endif

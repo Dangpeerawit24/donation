@@ -1,6 +1,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>ระบบกองบุญออนไลน์</title><!--begin::Primary Meta Tags-->
-    <link rel="icon" type="" href="{{asset('public/img/AdminLogo.png')}}" />
+    <link rel="icon" type="" href="{{asset('img/AdminLogo.png')}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="ระบบกองบุญออนไลน์">
     <meta name="author" content="ColorlibHQ">
