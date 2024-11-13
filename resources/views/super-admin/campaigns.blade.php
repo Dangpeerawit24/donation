@@ -52,14 +52,14 @@
                                     <button class="btn btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#editcampaignModal{{ $campaign->id }}">แก้ไข</button>
     
-                                    {{-- <button class="btn btn-danger"
+                                    <button class="btn btn-danger"
                                         onclick="confirmDelete({{ $campaign->id }})">ลบข้อมูล</button>
                                     <form id="delete-form-{{ $campaign->id }}"
                                         action="{{ route('super-admin.campaigns.destroy', $campaign->id) }}" method="POST"
                                         style="display: none;">
                                         @csrf
                                         @method('DELETE')
-                                    </form> --}}
+                                    </form>
     
                                     <!-- Modal สำหรับแก้ไขข้อมูล -->
                                     <div class="modal fade" id="editcampaignModal{{ $campaign->id }}" tabindex="-1"

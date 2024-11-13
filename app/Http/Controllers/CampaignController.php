@@ -65,8 +65,7 @@ class CampaignController extends Controller
             "ธ.ไทยพาณิชย์ เลขที่บัญชี 649-242269-4\n\n" .
             "📌 ร่วมบุญผ่านระบบกองบุญออนไลน์ได้ที่: $linkapp";
 
-        $imageUrl = asset('public/img/campaign/' . $campaign->campaign_img); // URL ของรูปภาพที่อัปโหลด
-        // $imageUrl = "https://images.unsplash.com/photo-1719937206341-38a6392dfdef?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8"; // URL ของรูปภาพที่อัปโหลด
+        $imageUrl = asset('img/campaign/' . $campaign->campaign_img); 
 
         // ส่งคำขอไปยัง LINE OA
         $response = Http::withHeaders([
