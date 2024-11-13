@@ -35,7 +35,7 @@ class CampaignController extends Controller
             'stock' => 'required|integer',
             'details' => 'required',
             'status' => 'required',
-            'campaign_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'campaign_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:7048',
         ]);
 
         $data = $request->all();
