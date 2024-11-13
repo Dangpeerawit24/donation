@@ -26,7 +26,7 @@
                             <th style="text-align:center; width: 25%;">รายละเอียด</th>
                             <th style="text-align:center; width: 8%;">ราคา</th>
                             <th style="text-align:center; width: 12%;">จำนวนที่เปิดรับ</th>
-                            <th style="text-align:center; width: 20%;">การเปลื่ยนแปลง</th>
+                            <th style="text-align:center; width: 25%;">การเปลื่ยนแปลง</th>
                         </tr>
                     </thead>
                     <tbody>
