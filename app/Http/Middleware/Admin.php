@@ -23,7 +23,7 @@ class Admin
         $userRole = Auth::user()->role;
 
         // Super Admin
-        if ($userRole == 3) {
+        if ($userRole == 1) {
             return redirect()->route('super-admin.dashboard');
         } 
         
