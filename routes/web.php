@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     ProfileController,
     UserController,
+    WelcomeController,
     QRCodeController,
     CampaignController,
     CategoryController,
@@ -23,6 +24,8 @@ use App\Http\Controllers\{
     FormcampaighgiveController,
     Auth\AuthenticatedSessionController
 };
+
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 // Auth Routes
 Route::get('/login', [AuthenticatedSessionController::class, 'store'])->name('login');

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Campaign;
 use Illuminate\Support\Facades\DB;
 
-class CampaignController extends Controller
+class WelcomeController extends Controller
 {
     public function index(request $request)
     {
