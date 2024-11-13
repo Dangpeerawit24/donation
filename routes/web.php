@@ -20,9 +20,10 @@ use App\Http\Controllers\FormcampaighbirthdayController;
 use App\Http\Controllers\FormcampaightextController;
 use App\Http\Controllers\FormcampaighallController;
 use App\Http\Controllers\FormcampaighgiveController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-
-Route::get('/login', function () { return view('auth.login');});
+Route::get('/login', [AuthenticatedSessionController::class, 'store']);
+// Route::get('/login', function () { return view('auth.login');});
 
 // Line App
 Route::get('/line/login', [LineLoginController::class, 'redirectToLine'])->name('line.login');
