@@ -1,5 +1,3 @@
-{{-- @dd($campaignData); --}}
-{{-- @dd($profile); --}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +7,6 @@
     <title>ระบบกองบุญออนไลน์</title>
     <link rel="icon" type="" href="{{asset('img/AdminLogo.png')}}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 </head>
@@ -54,7 +51,7 @@
                             <h5 style="color: var(--bs-emphasis-color);font-weight: bold;">แนบหลักฐานการโอนเงิน</h5>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="margin-top: 2px;"><input
-                                class="form-control" type="file" name="evidence" required></div>
+                                class="form-control" type="file" id="evidence" name="evidence" required></div>
                         <input type="hidden" id="campaignsid" name="campaignsid" value="{{ $data['campaign']->id }}">
                         <input type="hidden" id="campaignsname" name="campaignsname" value="{{ $data['campaign']->name }}">
                         <input type="hidden" name="lineId" value="{{ $data['profile']['userId'] }}">
@@ -62,7 +59,7 @@
                         <input type="hidden" name="transactionID" value="TX-{{ now()->timestamp }}-{{ rand(1000, 9999) }}">
                         <div class="d-flex justify-content-center align-items-center"
                             style="margin-top: 12px;margin-bottom: px;"><button class="btn btn-primary"
-                                type="submit">ยืนยันส่งข้อมูล</button></div>
+                                type="bottom" onclick="submitForm()">ยืนยันส่งข้อมูล</button></div>
                     </form>@endforeach
                 </div>
                 <div style="margin-top: 8px;">
@@ -134,44 +131,68 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <script>
-    function fetchDonationDetails(index) {
+    let cachedDetails = null; // ตัวแปรสำหรับเก็บข้อมูลที่ดึงมา
+    const pricePerUnit = {{ $campaignData[0]['campaign']->price ?? 0 }}; // กำหนดราคาต่อหน่วยจาก Blade
+
+    // ดึงข้อมูลล่วงหน้าเมื่อหน้าเว็บโหลด
+    window.onload = function() {
         fetch('/fetch_formcampaigh_details')
             .then(response => response.json())
             .then(details => {
-                const inputDiv = document.createElement('div');
-                inputDiv.className = 'input-container';
-
-                let options = `<select name="name[]" id="donorName${index}" onchange="checkNewEntry(this, ${index})" style="width: 100%; text-align: center; height: 45.4286px;" required>
-                                <option value="">--กดเลือกรายนามที่เคยร่วมบุญ--</option>`;
-
-                details.forEach((detail, idx) => {
-                    options += `<option value="${detail}">${detail}</option>`;
-                });
-
-                options += `<option value="new">เพิ่มรายการใหม่</option></select>`;
-
-                const newInput = `<input type="text" name="newName[]" id="newDonorName${index}" style="width: 100%; text-align: center; height: 45.4286px; align-content: center; display: none;" placeholder="ชื่อ-นามสกุล ${index + 1}" required>`;
-
-                inputDiv.innerHTML = `<label for="donorName${index}">กรอกชื่อ-นามสกุล ชุดที่ ${index + 1}</label>` + options + newInput;
-
-                document.getElementById('donationInputs').appendChild(inputDiv);
+                cachedDetails = details; // เก็บข้อมูลใน cache
+                console.log('ข้อมูลที่ดึงมา:', cachedDetails); // ตรวจสอบข้อมูล
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error fetching details:', error));
+    };
+
+    // ฟังก์ชันสำหรับสร้างกล่องข้อความ
+    function createInputFields(index) {
+        const inputDiv = document.createElement('div');
+        inputDiv.className = 'input-container';
+
+        // สร้าง Select ตัวเลือก
+        let options = `<select name="name[]" id="donorName${index}" onchange="checkNewEntry(this, ${index})" style="width: 100%; text-align: center; height: 45.4286px;" required>
+                        <option value="">--กดเลือกรายนามที่เคยร่วมบุญ--</option>`;
+
+        // ใช้ข้อมูลจาก cachedDetails ในการสร้างตัวเลือก
+        cachedDetails.forEach(detail => {
+            options += `<option value="${detail}">${detail}</option>`;
+        });
+
+        // เพิ่มตัวเลือก "เพิ่มข้อมูลใหม่"
+        options += `<option value="new">เพิ่มรายการใหม่</option></select>`;
+
+        // สร้าง Input สำหรับกรอกข้อมูลใหม่
+        const newInput = `<input type="text" name="newName[]" id="newDonorName${index}" style="width: 100%; text-align: center; height: 45.4286px; display: none;" placeholder="ชื่อ-นามสกุล ${index + 1}" required>`;
+
+        // รวม Select และ Input เข้าใน Div
+        inputDiv.innerHTML = `<label for="donorName${index}">กรอกชื่อ-นามสกุล ชุดที่ ${index + 1}</label>` + options + newInput;
+
+        // เพิ่ม Div ลงใน Container
+        document.getElementById('donationInputs').appendChild(inputDiv);
     }
 
+    // ฟังก์ชันอัปเดตกล่องข้อความและคำนวณยอดเงินรวม
     function updateDonationInputs() {
-        const count = document.getElementById('donationCount').value;
-        @foreach ($campaignData as $data)
-        const pricePerUnit = {{ $data['campaign']->price }};
-        @endforeach
+        const count = parseInt(document.getElementById('donationCount').value, 10); // จำนวนที่ป้อน
         const donationInputsContainer = document.getElementById('donationInputs');
-        donationInputsContainer.innerHTML = '';
+        donationInputsContainer.innerHTML = ''; // ลบกล่องข้อความเก่าทั้งหมด
 
-        const totalAmount = count * pricePerUnit;
-        document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
+        // ตรวจสอบว่าจำนวนที่เลือกเป็นตัวเลขบวก
+        if (!isNaN(count) && count > 0) {
+            const totalAmount = count * pricePerUnit; // คำนวณยอดรวม
+            document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
 
-        for (let i = 0; i < count; i++) {
-            fetchDonationDetails(i);
+            // ตรวจสอบว่ามีข้อมูลใน cachedDetails ก่อนสร้างกล่องข้อความ
+            if (cachedDetails) {
+                for (let i = 0; i < count; i++) {
+                    createInputFields(i);
+                }
+            } else {
+                console.error('ยังไม่มีข้อมูลใน cachedDetails');
+            }
+        } else {
+            document.getElementById('totalAmountDisplay').innerText = "0.00 บาท"; // หากจำนวนไม่ถูกต้อง
         }
     }
 
@@ -180,9 +201,7 @@
         if (select.value === "new") {
             newInput.style.display = 'block';
             newInput.required = true;
-
-            // Optional: Clear the input field when it becomes visible
-            newInput.value = '';
+            newInput.value = ''; // รีเซ็ตค่า Input
         } else {
             newInput.style.display = 'none';
             newInput.required = false;
@@ -210,8 +229,8 @@
             swal("กรุณากรอกข้อมูลให้ครบถ้วน", "", "error");
         }
     });
-
-    function copyToClipboard(id) {
+	
+	function copyToClipboard(id) {
         const inputField = document.getElementById(id);
 
         if (!inputField) {
@@ -228,6 +247,44 @@
                 console.error("Error copying text: ", err);
             });
     }
+	
+	function submitForm() {
+    const fileInput = document.getElementById('evidence');
+    const donorInputs = document.querySelectorAll('[id^="donorName"], [id^="newDonorName"]');
+
+    // ตรวจสอบว่าทุกช่องที่มองเห็นได้ถูกกรอก
+    const allInputsFilled = Array.from(donorInputs).every(input => {
+        if (input.style.display !== 'none') {
+            return input.value.trim() !== ""; // ตรวจเฉพาะช่องที่แสดงอยู่
+        }
+        return true; // ข้ามช่องที่ซ่อนอยู่
+    });
+
+    if (fileInput.files.length === 0 || !allInputsFilled) {
+        swal({
+            title: "กรุณากรอกข้อมูลให้ครบ",
+            text: "คุณยังไม่ได้เลือกไฟล์ หรือกรอกข้อมูลในทุกช่อง กรุณาตรวจสอบอีกครั้ง",
+            icon: "warning",
+            button: "ตกลง"
+        });
+    } else {
+        swal({
+            title: "กำลังประมวลผล",
+            text: "กรุณารอสักครู่...",
+            icon: "info",
+            buttons: false,
+            closeOnClickOutside: false,
+            closeOnEsc: false
+        });
+
+        // เพิ่มดีเลย์เล็กน้อยก่อนส่งฟอร์ม
+        setTimeout(() => {
+            document.getElementById("uploadForm").submit();
+        }, 1000); // ดีเลย์ 1 วินาที
+    }
+}
+
 </script>
+
 
 </html>
