@@ -47,6 +47,10 @@
 </head>
 
 <body style="background-color: var(--bs-danger-text-emphasis);">
+    <!-- Loader -->
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
     <div>
         <nav class="navbar navbar-expand-md bg-body py-3">
             <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><img width="40" height="40" src="{{asset('img/AdminLogo.png')}}" /><span style="font-size: 14px;font-weight: bold;">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</span></a><a class="btn btn-primary" role="button" style="font-size: 13px;" href="/">หน้าหลัก</a></div>

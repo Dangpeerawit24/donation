@@ -48,6 +48,10 @@
 </head>
 
 <body style="background-color: var(--bs-danger-text-emphasis);">
+    <!-- Loader -->
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
     <div>
         <nav class="navbar navbar-expand-md bg-body py-3">
             <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><img
