@@ -22,29 +22,29 @@
                         <tr>
                             <th style="text-align:center; width:5%">No.</th>
                             <th style="text-align:center; width:10%">รูปกองบุญ</th>
-                            <th style="text-align:center; width: 20%;">ชื่อกองบุญ</th>
-                            <th style="text-align:center; width: 25%;">รายละเอียด</th>
-                            <th style="text-align:center; width: 8%;">ราคา</th>
-                            <th style="text-align:center; width: 12%;">จำนวนที่เปิดรับ</th>
+                            <th style="text-align:center; width: 35%;">ชื่อกองบุญ</th>
+                            {{-- <th style="text-align:center; width: 25%;">รายละเอียด</th> --}}
+                            <th style="text-align:center; width: 10%;">ราคา</th>
+                            <th style="text-align:center; width: 15%;">จำนวนที่เปิดรับ</th>
                             <th style="text-align:center; width: 25%;">การเปลื่ยนแปลง</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($campaigns as $index => $campaign)
                             <tr>
-                                <td style="text-align:center">{{ $index + 1 }}</td>
-                                <td style="text-align:center">
+                                <td style="text-align:center; align-content: center;">{{ $index + 1 }}</td>
+                                <td style="text-align:center; align-content: center;">
                                     @if ($campaign->campaign_img)
                                         <img src="{{ asset('img/campaign/' . $campaign->campaign_img) }}" alt="Campaign Image" width="100px" height="100px">
                                     @else
                                         No Image
                                     @endif
                                 </td>
-                                <td>{{ $campaign->name }}</td>
-                                <td>{{ $campaign->description }}</td>
-                                <td style="text-align:center;">{{ $campaign->price }}</td>
-                                <td style="text-align:center;">{{ $campaign->stock }}</td>
-                                <td style="text-align:center">
+                                <td style="text-align:center; align-content: center;">{{ $campaign->name }}</td>
+                                {{-- <td>{{ $campaign->description }}</td> --}}
+                                <td style="text-align:center; align-content: center;">{{ $campaign->price }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $campaign->stock }}</td>
+                                <td style="text-align:center; align-content: center;">
                                     <!-- ปุ่มสำหรับเปิด Modal แก้ไข -->
                                     <a href="{{ url('super-admin/campaigns_transaction?campaign_id=' . $campaign->id . '&name=' .$campaign->name) }}" class="btn btn-primary">
                                         ดูรายการผู้ร่วมบุญ
