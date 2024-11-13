@@ -123,7 +123,7 @@ class FormcampaighallController extends Controller
         $result->saveToFile($qrFilePath);
 
         // ใช้ APP_URL สำหรับเก็บ Path ของ QR Code
-        $qrUrl = env('APP_URL') . '/img/qrcodes/' . $qrFileName;
+        $qrUrl = env('APP_URL') . '/img/qr-codes/' . $qrFileName;
 
         // บันทึกข้อมูลลงในฐานข้อมูล
         DB::table('campaign_transactions')->insert([
