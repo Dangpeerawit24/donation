@@ -65,29 +65,6 @@ Route::middleware(['auth', 'verified', 'super-admin'])->prefix('super-admin')->n
     Route::get('/qrcode', [QRCodeController::class, 'index'])->name('qr-code.index');
 });
 
-// Admin
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified', 'admin'])->name('admin.dashboard');
-Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('/dashboard', DashboardController::class);
-    Route::get('/api/dashboard-data', [DashboardController::class, 'getDashboardData'])->name('dashboard.data');
-    Route::resource('/campaigns', CampaignController::class);
-    Route::resource('/campaigns_transaction', CampaignTransactionController::class);
-    Route::resource('/campaign_transaction_complete', CampaignTransactionComplete::class);
-    Route::resource('/categories', CategoryController::class);
-    Route::resource('/categoriesdetails', CategoriesdetailsCoontroller::class);
-    Route::resource('/users', UserController::class);
-    Route::get('/qrcode', [QRCodeController::class, 'index'])->name('qr-code.index');
-});
-
-
-Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/campaigns', function () { return view('admin.campaigns');})->name('campaigns');
-    Route::get('/categories', function () { return view('admin.categories');})->name('categories');
-    Route::get('/qrcode', [QRCodeController::class, 'index'])->name('qr-code.index');
-});
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
