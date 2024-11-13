@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\campaign_transaction;
+use App\Models\Campaign_transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
