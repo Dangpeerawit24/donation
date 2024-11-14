@@ -15,8 +15,8 @@
         </a>
     </div>
 </div>
-<div class="app-content"> <!--begin::Container-->
-    <div class="container-fluid"> <!--begin::Row-->
+<div class="app-content">
+    <div class="container-fluid">
         <div class="card">
             <div class="card-body">
                 <table id="example" class="display nowrap" style="width:100%">
@@ -65,7 +65,7 @@
 </div>
 <script>
     function showImage(src) {
-    console.log(src); // ตรวจสอบว่าค่า src ถูกต้องหรือไม่
+    console.log(src);
     document.getElementById('modalImage').src = src;
 }
 </script>

@@ -3,18 +3,18 @@
     $menu = 'users'
 @endphp
 @Section('content')
-<div class="app-content-header"> <!--begin::Container-->
-    <div class="container-fluid"> <!--begin::Row-->
+<div class="app-content-header">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
                 <h3 class="mb-0">จัดการข้อมูลสมาชิก</h3>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createMemberModal">เพิ่มสมาชิก</button>
             </div>
-        </div> <!--end::Row-->
-    </div> <!--end::Container-->
-</div> <!--end::App Content Header--> <!--begin::App Content-->
-<div class="app-content"> <!--begin::Container-->
-    <div class="container-fluid"> <!--begin::Row-->
+        </div> 
+    </div> 
+</div> 
+<div class="app-content">
+    <div class="container-fluid">
         <div class="card">
             <div class="card-body">
                 <table id="example" class="table table-bordered">
@@ -90,10 +90,10 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div> <!-- /.card-body -->
+            </div> 
         </div>
-    </div> <!--end::Container-->
-</div> <!--end::App Content-->
+    </div> 
+</div> 
 <div class="modal fade" id="createMemberModal" tabindex="-1" aria-labelledby="createMemberModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

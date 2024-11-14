@@ -1,4 +1,3 @@
-{{-- @dd($campaignsname) --}}
 <!doctype html>
 <html lang="en">
 
@@ -9,7 +8,7 @@
     <link rel="icon" type="" href="{{ asset('img/AdminLogo.png') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
-        /* Loader Styles */
+       
         #loader {
             position: fixed;
             top: 0;
@@ -21,7 +20,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            visibility: hidden; /* ซ่อน Loader โดยค่าเริ่มต้น */
+            visibility: hidden; 
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -32,8 +31,8 @@
         }
 
         .spinner {
-            border: 5px solid #f3f3f3; /* Light grey */
-            border-top: 5px solid #3498db; /* Blue */
+            border: 5px solid #f3f3f3; 
+            border-top: 5px solid #3498db; 
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -48,7 +47,6 @@
 </head>
 
 <body style="background-color: var(--bs-danger-text-emphasis);">
-    <!-- Loader -->
     <div id="loader">
         <div class="spinner"></div>
     </div>
@@ -78,7 +76,7 @@
                     <h1 class="text-center">ภาพจากกองบุญ</h1>
                     <h2 class="text-center">{{ $campaignsname }}</h2>
                     <div class="d-flex justify-content-center">
-                        <img class="rounded img-fluid" src="{{ $url_img }}" alt="Campaign Image" />
+                        <img class="rounded img-fluid" src="{{ $url_img }}" width="100%" alt="Campaign Image" />
                     </div>
                 </div>
             </div>
@@ -89,21 +87,19 @@
     document.addEventListener("DOMContentLoaded", function () {
         const loader = document.getElementById('loader');
 
-        // ซ่อน Loader เมื่อกลับมายังหน้าโดยใช้ปุ่ม Back ของเบราว์เซอร์
         window.addEventListener('pageshow', function (event) {
             if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
                 loader.classList.remove('show');
             }
         });
 
-        // แสดง Loader เมื่อคลิกลิงก์
         document.addEventListener('click', function (e) {
             if (e.target.tagName === 'A' && e.target.href) {
-                e.preventDefault(); // ป้องกัน Default Action
-                loader.classList.add('show'); // แสดง Loader
+                e.preventDefault();
+                loader.classList.add('show');
                 setTimeout(() => {
-                    window.location.href = e.target.href; // เปลี่ยนหน้า
-                }, 300); // เพิ่มดีเลย์เพื่อให้เห็นแอนิเมชัน
+                    window.location.href = e.target.href;
+                }, 300); 
             }
         });
     });

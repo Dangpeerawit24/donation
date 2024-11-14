@@ -13,8 +13,8 @@
         </div>
     </div>
 </div>
-<div class="app-content"> <!--begin::Container-->
-    <div class="container-fluid"> <!--begin::Row-->
+<div class="app-content"> 
+    <div class="container-fluid">
         <div class="card">
             <div class="card-body">
                 <table id="example" class="table table-bordered">
@@ -87,7 +87,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div> <!-- /.card-body -->
+            </div> 
         </div>
     </div>
 </div>

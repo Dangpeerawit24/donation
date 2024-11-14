@@ -8,7 +8,6 @@
     <link rel="icon" type="" href="{{asset('img/AdminLogo.png')}}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
-        /* Loader Styles */
         #loader {
             position: fixed;
             top: 0;
@@ -20,7 +19,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            visibility: hidden; /* ซ่อน Loader โดยค่าเริ่มต้น */
+            visibility: hidden;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -31,8 +30,8 @@
         }
 
         .spinner {
-            border: 5px solid #f3f3f3; /* Light grey */
-            border-top: 5px solid #3498db; /* Blue */
+            border: 5px solid #f3f3f3; 
+            border-top: 5px solid #3498db; 
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -47,7 +46,6 @@
 </head>
 
 <body style="background-color: var(--bs-danger-text-emphasis);">
-    <!-- Loader -->
     <div id="loader">
         <div class="spinner"></div>
     </div>
@@ -61,28 +59,27 @@
         <h1 style="margin-bottom: 0px;padding: 0px;color: var(--bs-body-bg);font-size: 26.88px;margin-top: 5px;text-align: center;">ที่ท่านได้ร่วมบุญ</h1>
     </div>
     <div class="d-flex justify-content-center">
-        <div class="col-12">
-            <div class="card" style="margin: 0px;margin-top: 18px;">
+        <div class="col-12" style="justify-items: center;">
+            <div class="card col-11" style="margin: 0px;margin-top: 18px;">
                 <div class="card-body border rounded" style="margin: 0px;margin-top: 0px;padding: 0px;"></div>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped table-hover table-bordered" style=" table-layout: fixed; width: 100%; ">
                         <thead>
                             <tr>
-                                <th width="30%" class="text-center">กองบุญ</th>
-                                <th width="40%" class="text-center">รายนาม</th>
+                                <th width="70%" class="text-center">กองบุญ</th>
                                 <th width="30%" class="text-center">สถานะ</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php $i = 0; @endphp
                             @foreach ($Datas as $Data)
                                 <tr>
-                                    <td class="text-start">{{ $Data->campaignsname }}</td>
-                                    <td class="text-center">{{ $Data->details }}{{ $Data->detailsbirthday }}{{ $Data->detailstext }}</td>
-                                    <td class="text-center">
+                                    <td class="text-start" style="vertical-align: middle; word-wrap: break-word;">กองบุญ{{ $Data->campaignsname }}<br>รายนาม :<br>{{ $Data->details }}{{ $Data->detailsbirthday }}{{ $Data->detailstext }}</td>
+                                    <td class="text-center" style="vertical-align: middle; word-wrap: break-word;">
                                         @if ($Data->status == 'ส่งภาพกองบุญแล้ว')
-                                            <a href="campaignstatusimg?url_img={{ $Data->url_img }}&campaignsname={{ $Data->campaignsname }}" class="btn btn-link" target="">ส่งภาพกองบุญแล้ว</a>
+                                            <a href="campaignstatusimg?url_img={{ $Data->url_img }}&campaignsname={{ $Data->campaignsname }}" class="btn btn-link" target=""><span class="badge bg-success">ส่งภาพ<br>กองบุญแล้ว</span></a>
                                         @else
-                                            {{ $Data->status }}
+                                            <span class="badge bg-warning text-dark">รอ<br>ดำเนินการ</span>
                                         @endif
                                     </td>
                                 </tr>
@@ -93,28 +90,25 @@
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const loader = document.getElementById('loader');
 
-        // ซ่อน Loader เมื่อกลับมายังหน้าโดยใช้ปุ่ม Back ของเบราว์เซอร์
         window.addEventListener('pageshow', function (event) {
             if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
                 loader.classList.remove('show');
             }
         });
 
-        // แสดง Loader เมื่อคลิกลิงก์
         document.addEventListener('click', function (e) {
             if (e.target.tagName === 'A' && e.target.href) {
-                e.preventDefault(); // ป้องกัน Default Action
-                loader.classList.add('show'); // แสดง Loader
+                e.preventDefault(); 
+                loader.classList.add('show');
                 setTimeout(() => {
-                    window.location.href = e.target.href; // เปลี่ยนหน้า
-                }, 300); // เพิ่มดีเลย์เพื่อให้เห็นแอนิเมชัน
+                    window.location.href = e.target.href; 
+                }, 300);
             }
         });
     });

@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
-        /* Loader Styles */
         #loader {
             position: fixed;
             top: 0;
@@ -20,7 +19,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            visibility: hidden; /* ซ่อน Loader โดยค่าเริ่มต้น */
+            visibility: hidden;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -31,8 +30,8 @@
         }
 
         .spinner {
-            border: 5px solid #f3f3f3; /* Light grey */
-            border-top: 5px solid #3498db; /* Blue */
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -47,7 +46,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body style="background-color: var(--bs-danger-text-emphasis);">
-    <!-- Loader -->
     <div id="loader">
         <div class="spinner"></div>
     </div>
@@ -56,9 +54,9 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
                 <img width="40" height="40" src="{{ asset('img/AdminLogo.png') }}" />
-                <span style="font-size: 14px;font-weight: bold;">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</span>
+                <span style="font-size: 16px;font-weight: bold;">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</span>
             </a>
-            <a class="btn btn-primary" role="button" href="{{ url('campaignstatus?userId=' . $profile['userId']) }}" style="font-size: 13px;">สถานะ</a>
+            <a class="btn btn-primary" role="button" href="{{ url('campaignstatus?userId=' . $profile['userId']) }}" style="font-size: 13px;">สถานะกองบุญ</a>
         </div>
     </nav>
 
@@ -101,21 +99,19 @@
     document.addEventListener("DOMContentLoaded", function () {
         const loader = document.getElementById('loader');
 
-        // ซ่อน Loader เมื่อกลับมายังหน้าโดยใช้ปุ่ม Back ของเบราว์เซอร์
         window.addEventListener('pageshow', function (event) {
             if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
                 loader.classList.remove('show');
             }
         });
 
-        // แสดง Loader เมื่อคลิกลิงก์
         document.addEventListener('click', function (e) {
             if (e.target.tagName === 'A' && e.target.href) {
-                e.preventDefault(); // ป้องกัน Default Action
-                loader.classList.add('show'); // แสดง Loader
+                e.preventDefault(); 
+                loader.classList.add('show');
                 setTimeout(() => {
-                    window.location.href = e.target.href; // เปลี่ยนหน้า
-                }, 300); // เพิ่มดีเลย์เพื่อให้เห็นแอนิเมชัน
+                    window.location.href = e.target.href;
+                }, 300); 
             }
         });
     });
