@@ -138,7 +138,7 @@
 
     // ดึงข้อมูลล่วงหน้าเมื่อหน้าเว็บโหลด
     window.onload = function() {
-        fetch('/fetch_formcampaigh_details')
+        fetch('/fetch_formcampaightext_details')
             .then(response => response.json())
             .then(details => {
                 cachedDetails = details; // เก็บข้อมูลใน cache
@@ -168,7 +168,7 @@
         const newInput = `<textarea name="newName[]" id="newDonorName${index}" style="width: 100%; text-align: center; height: 300px; align-content: center; display: none;" placeholder="กรอกข้อมูล ชุดที่ ${index + 1}"></textarea>`;
 
         // รวม Select และ Input เข้าใน Div
-        inputDiv.innerHTML = `<label for="donorName${index}">กรอกชื่อ-นามสกุล ชุดที่ ${index + 1}</label>` + options + newInput;
+        inputDiv.innerHTML = `<label for="donorName${index}">กรอกข้อมูล ชุดที่ ${index + 1}</label>` + options + newInput;
 
         // เพิ่ม Div ลงใน Container
         document.getElementById('donationInputs').appendChild(inputDiv);

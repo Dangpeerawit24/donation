@@ -52,6 +52,7 @@ class PushevidenceController extends Controller
         $validated = $request->validate([
             'transactionID' => 'required|string',
             'userid' => 'required|string',
+            'campaignsname' => 'required|string',
             'url_img' => 'required|file|mimes:jpeg,png,jpg|max:7048',
         ]);
 
@@ -64,6 +65,7 @@ class PushevidenceController extends Controller
 
         // URL ของรูปภาพที่อัปโหลด
         $imageUrl = asset('img/pushimg/' . $fileName);
+        $campaignsname = $validated['campaignsname'];
 
         // อัปเดตข้อมูลในตาราง campaign_transactions
         $updated = DB::table('campaign_transactions')
@@ -76,7 +78,7 @@ class PushevidenceController extends Controller
 
         if ($updated) {
             // ข้อความที่ต้องการส่ง
-            $message = "ขอนุโมทนาครับ🙏";
+            $message = "ภาพจากกองบุญ $campaignsname ขออนุโมทนาครับ🙏";
 
             // ส่งข้อความและรูปภาพ
             $this->sendPushMessage($validated['userid'], $message, $imageUrl);

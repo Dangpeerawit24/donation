@@ -45,6 +45,9 @@
                 </div>
                 <input type="hidden" name="userid" value="{{ $lineId }}">
                 <input type="hidden" id="transactionID" name="transactionID" value="{{ $transactionID }}">
+                @foreach ($names as $name)
+                <input type="hidden" id="campaignsname" name="campaignsname" value="{{ $name->campaignsname }}">
+                @endforeach
                 <div class="d-flex justify-content-center align-items-center mt-3">
                     <button class="btn btn-success" type="button" onclick="submitForm()">ยืนยันหลักฐาน</button>
                 </div>
@@ -85,7 +88,7 @@
     </script>
     @if (session('success'))
         <script>
-            Swal.fire({
+            Swal({
                 icon: 'success',
                 title: '{{ session('success') }}',
                 timer: 5000,
