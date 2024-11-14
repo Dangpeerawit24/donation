@@ -166,7 +166,7 @@
         const newInput = `<input type="text" name="newName[]" id="newDonorName${index}" style="width: 100%; text-align: center; height: 45.4286px; display: none;" placeholder="ชื่อ-นามสกุล ${index + 1}" required>`;
 
         // รวม Select และ Input เข้าใน Div
-        inputDiv.innerHTML = `<label for="donorName${index}">กรอกชื่อ-นามสกุล ชุดที่ ${index + 1}</label>` + options + newInput;
+        inputDiv.innerHTML = `<label for="donorName${index}">กรอกข้อมูล ชุดที่ ${index + 1}</label>` + options + newInput;
 
         // เพิ่ม Div ลงใน Container
         document.getElementById('donationInputs').appendChild(inputDiv);
