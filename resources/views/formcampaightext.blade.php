@@ -165,36 +165,37 @@
     }
 
     function updateDonationInputs() {
-    const countInput = document.getElementById('donationCount');
-    let count = parseInt(countInput.value, 10);
+        const countInput = document.getElementById('donationCount');
+        let count = parseInt(countInput.value, 10);
 
-    if (isNaN(count) || count < 0) {
-        count = 0;
-        countInput.value = count;
-    }
+        if (isNaN(count) || count < 0) {
+            count = 0;
+            countInput.value = count;
+        }
 
-    if (count > 30) {
-        swal("ข้อจำกัด!", "คุณไม่สามารถกรอกจำนวนกองบุญเกิน 30 ได้", "warning");
-        count = 30; 
-        countInput.value = count;
-    }
+        if (count > 30) {
+            swal("ข้อจำกัด!", "คุณไม่สามารถกรอกจำนวนกองบุญเกิน 30 ได้", "warning");
+            count = 30;
+            countInput.value = count;
+        }
 
-    const donationInputsContainer = document.getElementById('donationInputs');
-    donationInputsContainer.innerHTML = ''; 
+        const donationInputsContainer = document.getElementById('donationInputs');
+        donationInputsContainer.innerHTML = '';
 
-    if (count > 0) {
-        const totalAmount = count * pricePerUnit; 
-        document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
+        if (count > 0) {
+            const totalAmount = count * pricePerUnit;
+            document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
 
-        if (cachedDetails) {
-            for (let i = 0; i < count; i++) {
-                createInputFields(i); 
+            if (cachedDetails) {
+                for (let i = 0; i < count; i++) {
+                    createInputFields(i);
+                }
+            } else {
+                console.error('ยังไม่มีข้อมูลใน cachedDetails');
             }
         } else {
-            console.error('ยังไม่มีข้อมูลใน cachedDetails');
+            document.getElementById('totalAmountDisplay').innerText = "0.00 บาท";
         }
-    } else {
-        document.getElementById('totalAmountDisplay').innerText = "0.00 บาท";
     }
 
     function checkNewEntry(select, index) {
