@@ -102,7 +102,7 @@ class FormcampaighallController extends Controller
         }
 
         // สร้างข้อมูลสำหรับ QR Code
-        $qrData = env('APP_URL') . "/pushevidence?transactionID={$validated['transactionID']}&lineId={$validated['lineId']}&campaignId={$validated['campaignsid']}&campaignname={$validated['campaignsname']}&value={$validated['value']}";
+        $qrData = env('APP_URL') . "/pushevidence?transactionID={$validated['transactionID']}&lineId={$validated['lineId']}&campaignId={$validated['campaignsid']}&value={$validated['value']}&campaignname={$validated['campaignsname']}";
 
         $qrFolder = public_path('img/qr-codes/');
         if (!is_dir($qrFolder)) {
