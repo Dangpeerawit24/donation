@@ -87,7 +87,7 @@
                 icon: 'success',
                 title: "{{ session('success') }}",
                 timer: 5000,
-                buttons: false
+                buttons: "ตกลง"
             });
         </script>
     @endif
