@@ -12,12 +12,8 @@ class PushevidenceController extends Controller
     {
         // รับค่าจาก Query String
         $transactionID = $request->query('transactionID');
-        $lineId = $request->query('lineId');
-        $campaignId = $request->query('campaignId');
-        $campaignname = $request->query('campaignname');
-        $value = $request->query('value');
-
-        if (!$campaignId || !$lineId) {
+        
+        if (!$transactionID) {
             return redirect()->back()->with('error', 'ข้อมูลไม่ครบถ้วน');
         }
 
@@ -37,10 +33,6 @@ class PushevidenceController extends Controller
 
         return view('pushevidence', [
             'names' => $namess,
-            'lineId' => $lineId,
-            'campaignId' => $campaignId,
-            'campaignname' => $campaignname,
-            'value' => $value,
             'transactionID' => $transactionID,
         ]);
     }
