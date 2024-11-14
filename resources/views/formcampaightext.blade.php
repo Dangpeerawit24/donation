@@ -1,5 +1,3 @@
-{{-- @dd($campaignData); --}}
-{{-- @dd($profile); --}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -133,69 +131,70 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <script>
-    let cachedDetails = null; // ตัวแปรสำหรับเก็บข้อมูลที่ดึงมา
-    const pricePerUnit = {{ $campaignData[0]['campaign']->price ?? 0 }}; // กำหนดราคาต่อหน่วยจาก Blade
+    let cachedDetails = null; 
+    const pricePerUnit = {{ $campaignData[0]['campaign']->price ?? 0 }};
 
-    // ดึงข้อมูลล่วงหน้าเมื่อหน้าเว็บโหลด
     window.onload = function() {
         fetch('/fetch_formcampaightext_details')
             .then(response => response.json())
             .then(details => {
-                cachedDetails = details; // เก็บข้อมูลใน cache
-                console.log('ข้อมูลที่ดึงมา:', cachedDetails); // ตรวจสอบข้อมูล
+                cachedDetails = details;
+                console.log('ข้อมูลที่ดึงมา:', cachedDetails);
             })
             .catch(error => console.error('Error fetching details:', error));
     };
 
-    // ฟังก์ชันสำหรับสร้างกล่องข้อความ
     function createInputFields(index) {
         const inputDiv = document.createElement('div');
         inputDiv.className = 'input-container';
 
-        // สร้าง Select ตัวเลือก
         let options = `<select name="name[]" id="donorName${index}" onchange="checkNewEntry(this, ${index})" style="width: 100%; text-align: center; height: 45.4286px;" required>
                         <option value="">--กดเลือกรายนามที่เคยร่วมบุญ--</option>`;
 
-        // ใช้ข้อมูลจาก cachedDetails ในการสร้างตัวเลือก
         cachedDetails.forEach(detail => {
             options += `<option value="${detail}">${detail}</option>`;
         });
 
-        // เพิ่มตัวเลือก "เพิ่มข้อมูลใหม่"
         options += `<option value="new">เพิ่มรายการใหม่</option></select>`;
 
-        // สร้าง Input สำหรับกรอกข้อมูลใหม่
         const newInput = `<textarea name="newName[]" id="newDonorName${index}" style="width: 100%; text-align: center; height: 300px; align-content: center; display: none;" placeholder="กรอกข้อมูล ชุดที่ ${index + 1}"></textarea>`;
 
-        // รวม Select และ Input เข้าใน Div
         inputDiv.innerHTML = `<label for="donorName${index}">กรอกข้อมูล ชุดที่ ${index + 1}</label>` + options + newInput;
 
-        // เพิ่ม Div ลงใน Container
         document.getElementById('donationInputs').appendChild(inputDiv);
     }
 
-    // ฟังก์ชันอัปเดตกล่องข้อความและคำนวณยอดเงินรวม
     function updateDonationInputs() {
-        const count = parseInt(document.getElementById('donationCount').value, 10); // จำนวนที่ป้อน
-        const donationInputsContainer = document.getElementById('donationInputs');
-        donationInputsContainer.innerHTML = ''; // ลบกล่องข้อความเก่าทั้งหมด
+    const countInput = document.getElementById('donationCount');
+    let count = parseInt(countInput.value, 10);
 
-        // ตรวจสอบว่าจำนวนที่เลือกเป็นตัวเลขบวก
-        if (!isNaN(count) && count > 0) {
-            const totalAmount = count * pricePerUnit; // คำนวณยอดรวม
-            document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
+    if (isNaN(count) || count < 0) {
+        count = 0;
+        countInput.value = count;
+    }
 
-            // ตรวจสอบว่ามีข้อมูลใน cachedDetails ก่อนสร้างกล่องข้อความ
-            if (cachedDetails) {
-                for (let i = 0; i < count; i++) {
-                    createInputFields(i);
-                }
-            } else {
-                console.error('ยังไม่มีข้อมูลใน cachedDetails');
+    if (count > 30) {
+        swal("ข้อจำกัด!", "คุณไม่สามารถกรอกจำนวนกองบุญเกิน 30 ได้", "warning");
+        count = 30; 
+        countInput.value = count;
+    }
+
+    const donationInputsContainer = document.getElementById('donationInputs');
+    donationInputsContainer.innerHTML = ''; 
+
+    if (count > 0) {
+        const totalAmount = count * pricePerUnit; 
+        document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
+
+        if (cachedDetails) {
+            for (let i = 0; i < count; i++) {
+                createInputFields(i); 
             }
         } else {
-            document.getElementById('totalAmountDisplay').innerText = "0.00 บาท"; // หากจำนวนไม่ถูกต้อง
+            console.error('ยังไม่มีข้อมูลใน cachedDetails');
         }
+    } else {
+        document.getElementById('totalAmountDisplay').innerText = "0.00 บาท";
     }
 
     function checkNewEntry(select, index) {
@@ -203,7 +202,7 @@
         if (select.value === "new") {
             newInput.style.display = 'block';
             newInput.required = true;
-            newInput.value = ''; // รีเซ็ตค่า Input
+            newInput.value = '';
         } else {
             newInput.style.display = 'none';
             newInput.required = false;
@@ -227,7 +226,7 @@
 
     document.querySelector('form').addEventListener('submit', function (e) {
         if (!validateForm()) {
-            e.preventDefault(); // Prevent form submission if validation fails.
+            e.preventDefault();
             swal("กรุณากรอกข้อมูลให้ครบถ้วน", "", "error");
         }
     });
@@ -254,12 +253,11 @@
     const fileInput = document.getElementById('evidence');
     const donorInputs = document.querySelectorAll('[id^="donorName"], [id^="newDonorName"]');
 
-    // ตรวจสอบว่าทุกช่องที่มองเห็นได้ถูกกรอก
     const allInputsFilled = Array.from(donorInputs).every(input => {
         if (input.style.display !== 'none') {
-            return input.value.trim() !== ""; // ตรวจเฉพาะช่องที่แสดงอยู่
+            return input.value.trim() !== "";
         }
-        return true; // ข้ามช่องที่ซ่อนอยู่
+        return true;
     });
 
     if (fileInput.files.length === 0 || !allInputsFilled) {
@@ -279,10 +277,9 @@
             closeOnEsc: false
         });
 
-        // เพิ่มดีเลย์เล็กน้อยก่อนส่งฟอร์ม
         setTimeout(() => {
             document.getElementById("uploadForm").submit();
-        }, 1000); // ดีเลย์ 1 วินาที
+        }, 1000);
     }
 }
 

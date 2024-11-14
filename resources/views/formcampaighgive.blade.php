@@ -1,5 +1,3 @@
-{{-- @dd($campaignData); --}}
-{{-- @dd($profile); --}}
 <!DOCTYPE html>
 <html lang="en">
 

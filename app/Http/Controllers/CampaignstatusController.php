@@ -15,6 +15,7 @@ class CampaignstatusController extends Controller
         // ดึงข้อมูลจากฐานข้อมูลที่เกี่ยวข้องกับ userid
         $Datas = DB::table('campaign_transactions')
             ->where('lineId', $userId)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         // ส่งข้อมูลไปยัง View

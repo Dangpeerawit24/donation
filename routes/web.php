@@ -25,6 +25,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::get('/login', [AuthenticatedSessionController::class, 'store']);
 // Route::get('/login', function () { return view('auth.login');});
 
+Route::view('/test', 'test');
+
+
 // Line App
 Route::get('/line/login', [LineLoginController::class, 'redirectToLine'])->name('line.login');
 Route::get('/line/callback', [LineLoginController::class, 'handleLineCallback'])->name('line.callback');

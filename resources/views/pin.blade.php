@@ -17,13 +17,11 @@
         <form action="{{ route('pin.verify') }}" method="POST">
             @csrf
         
-            {{-- Input สำหรับกรอกรหัส PIN --}}
             <div class="mb-3">
                 <label for="pin" class="form-label">รหัส PIN</label>
                 <input type="password" name="pin" id="pin" class="form-control" maxlength="4" required>
             </div>
         
-            {{-- ส่ง Query Parameters กลับไป --}}
             @if (!empty($queryParams) && is_iterable($queryParams))
                 @foreach ($queryParams as $key => $value)
                     <input type="hidden" name="{{ $key }}" value="{{ $value }}">
