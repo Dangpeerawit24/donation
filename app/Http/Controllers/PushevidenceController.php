@@ -14,7 +14,7 @@ class PushevidenceController extends Controller
         $transactionID = $request->query('transactionID');
         $lineId = $request->query('lineId');
         $campaignId = $request->query('campaignId');
-        $campaignname = $request->query('campaignname');
+        // $campaignname = $request->query('campaignname');
         $value = $request->query('value');
 
         if (!$campaignId || !$lineId) {
@@ -34,6 +34,10 @@ class PushevidenceController extends Controller
         $namess = DB::table('campaign_transactions')
             ->where('transactionID', $transactionID)
             ->get();
+
+        $campaignname = DB::table('campaign_transactions')
+        ->where('transactionID', $transactionID)
+        ->get('campaignname');
 
         return view('pushevidence', [
             'names' => $namess,
