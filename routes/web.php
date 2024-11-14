@@ -25,7 +25,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::get('/login', [AuthenticatedSessionController::class, 'store']);
 // Route::get('/login', function () { return view('auth.login');});
 
-Route::view('/test', 'test');
+// Route::view('/test', 'test');
 
 
 // Line App
