@@ -45,7 +45,9 @@
                 </div>
                 <input type="hidden" name="userid" value="{{ $lineId }}">
                 <input type="hidden" id="transactionID" name="transactionID" value="{{ $transactionID }}">
-                <input type="hidden" id="campaignsname" name="campaignsname" value="{{ $campaignsname }}">
+                @foreach ($names as $name)
+                    <input type="hidden" id="campaignsname" name="campaignsname" value="{{ $name->campaignsname }}">
+                @endforeach
                 <div class="d-flex justify-content-center align-items-center mt-3">
                     <button class="btn btn-success" type="button" onclick="submitForm()">ยืนยันหลักฐาน</button>
                 </div>
