@@ -45,6 +45,7 @@
                 </div>
                 <input type="hidden" name="userid" value="{{ $lineId }}">
                 <input type="hidden" id="transactionID" name="transactionID" value="{{ $transactionID }}">
+                <input type="hidden" id="campaignsname" name="campaignsname" value="{{ $campaignsname }}">
                 <div class="d-flex justify-content-center align-items-center mt-3">
                     <button class="btn btn-success" type="button" onclick="submitForm()">ยืนยันหลักฐาน</button>
                 </div>
@@ -80,11 +81,11 @@
     </script>
     @if (session('success'))
         <script>
-            Swal.fire({
+            swal({
                 icon: 'success',
-                title: '{{ session('success') }}',
+                title: "{{ session('success') }}",
                 timer: 5000,
-                showConfirmButton: false
+                buttons: false
             });
         </script>
     @endif
