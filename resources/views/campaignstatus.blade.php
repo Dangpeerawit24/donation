@@ -74,7 +74,7 @@
                             @php $i = 0; @endphp
                             @foreach ($Datas as $Data)
                                 <tr>
-                                    <td class="text-start" style="vertical-align: middle; word-wrap: break-word;">กองบุญ{{ $Data->campaignsname }}<br>รายนาม :<br>{{ $Data->details }}{{ $Data->detailsbirthday }}{{ $Data->detailstext }}</td>
+                                    <td class="text-start" style="vertical-align: middle; word-wrap: break-word;">กองบุญ{{ $Data->campaignsname }}<br>รายนาม: {{ $Data->details }}{{ $Data->detailsbirthday }}{{ $Data->detailstext }}</td>
                                     <td class="text-center" style="vertical-align: middle; word-wrap: break-word;">
                                         @if ($Data->status == 'ส่งภาพกองบุญแล้ว')
                                             <a href="campaignstatusimg?url_img={{ $Data->url_img }}&campaignsname={{ $Data->campaignsname }}" class="btn btn-link" target=""><span class="badge bg-success">ส่งภาพ<br>กองบุญแล้ว</span></a>

@@ -120,7 +120,7 @@
         Swal.fire({
             icon: 'success',
             title: 'ขออนุโมทนาบุญกับคุณ<br>{{ session('lineName') }}',
-            html: 'ที่ได้ร่วมกองบุญ <br> {{ session('campaignname') }} <br> เรียบร้อยแล้ว',
+            html: 'ที่ได้ร่วมกองบุญ<br>{{ session('campaignname') }}',
             timer: 5000,
             showConfirmButton: false
         });
