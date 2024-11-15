@@ -73,7 +73,7 @@
                         <img src="{{ asset('img/campaign/' . $campaign->campaign_img) }}" class="rounded" width="300" height="300" alt="Campaign Image">
                     </div>
                     <h4 class="text-center my-3 "><strong>กองบุญ{{ $campaign->name }}</strong></h4>
-                    <p class="text-center text-muted">{{ $campaign->description }}</p>
+                    <p class="text-center text-muted">{!! str_replace('/n', '<br>', e($campaign->description)) !!}</p>
                     <div class="text-center">
                         @php
                             $details = $campaign->details;

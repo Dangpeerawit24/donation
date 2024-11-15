@@ -3,6 +3,13 @@
     $menu = 'campaigns'
 @endphp
 @Section('content')
+<style>
+    .char-counter {
+        font-size: 14px;
+        color: #555;
+        margin-top: 5px;
+    }
+</style>
 <div class="app-content-header">
     <div class="container-fluid">
         <div class="row">
@@ -169,8 +176,16 @@
                                 <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="mb-3">
-                                <label for="description" class="form-label">รายละเอียด</label>
-                                <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                                <label for="description" class="form-label">รายละเอียด (ต้องการขึ้นบรรทัดใหม่ให้พิมพ์ /n )</label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="description2" 
+                                    name="description" 
+                                    rows="4" 
+                                    maxlength="250" 
+                                    required
+                                ></textarea>
+                                <div id="charCount" class="form-text">เหลือ 250 ตัวอักษร</div>
                             </div>
                             <div class="mb-3 mt-1">
                                 <label for="" class="form-label">ราคา</label>
@@ -193,4 +208,19 @@
             </div>
         </div>
     </div>
+    <script>
+        const textarea = document.getElementById('description2');
+        const charCount = document.getElementById('charCount');
+        const maxLength = textarea.getAttribute('maxlength');
+    
+        textarea.addEventListener('input', () => {
+            const remaining = maxLength - textarea.value.length;
+            charCount.textContent = `เหลือ ${remaining} ตัวอักษร`;
+            if (remaining <= 20) {
+                charCount.style.color = 'red';
+            } else {
+                charCount.style.color = '#6c757d'; 
+            }
+        });
+    </script>
 @endSection

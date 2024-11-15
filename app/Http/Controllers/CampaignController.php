@@ -57,7 +57,7 @@ class CampaignController extends Controller
         $message = "🎉 ขอเชิญร่วมกองบุญ 🎉\n" .
             "✨ {$campaign->name}\n" .
             "💰 ร่วมบุญ: {$campaign->price} บาท\n" .
-            "📋 {$campaign->description}\n";
+            "📋 " . str_replace("/n", "\n", $campaign->description);
 
         $message2 = "แสดงหลักฐานการร่วมบุญ\n" .
             "💰 มูลนิธิเมตตาธรรมรัศมี\n" .
