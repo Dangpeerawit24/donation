@@ -25,9 +25,10 @@
                         <tr>
                             <th style="text-align:center; width:5%">No.</th>
                             <th style="text-align:center; width:15%">สลิป</th>
-                            <th style="text-align:center; width:20%">ชื่อไลน์</th>
                             <th style="text-align:center; width:30%">ข้อมูลผู้ร่วมบุญ</th>
                             <th style="text-align:center; width:10%">จำนวน</th>
+                            <th style="text-align:center; width:15%">ชื่อไลน์</th>
+                            <th style="text-align:center; width:5%">ที่มา</th>
                             <th style="text-align:center; width:10%">QR Url</th>
                         </tr>
                     </thead>
@@ -40,9 +41,10 @@
                                         <img src="{{ asset('img/evidence/' . $transaction->evidence) }}" height="100px" alt="หลักฐานการโอน">
                                     </a>
                                 </td>
-                                <td style="text-align:center; align-content: center;">{{ $transaction->lineName }}</td>
                                 <td style="text-align:center; align-content: center;">{{ $transaction->details }}{{ $transaction->detailsbirthday }}{{ $transaction->detailstext }}</td>
                                 <td style="text-align:center; align-content: center;">{{ $transaction->value }}</td>
+                                <td style="text-align:center; align-content: center;">{{ $transaction->lineName }}</td>
+                                <td style="text-align:center; align-content: center;">A</td>
                                 <td style="text-align:center; align-content: center;">{{ $transaction->qr_url }}</td>
                             </tr>
                         @endforeach
