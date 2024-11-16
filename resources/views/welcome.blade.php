@@ -119,8 +119,8 @@
     @if(session('success'))
         Swal.fire({
             icon: 'success',
-            title: 'ขออนุโมทนาบุญกับคุณ<br>{{ session('lineName') }}',
-            html: 'ที่ได้ร่วมกองบุญ<br>{{ session('campaignname') }}',
+            title: 'ขออนุโมทนาบุญกับ<br>คุณ{{ session('lineName') }}',
+            html: 'ที่ได้ร่วมกองบุญ{{ session('campaignname') }}',
             timer: 5000,
             showConfirmButton: false
         });
