@@ -47,8 +47,8 @@ public function verifyPin(Request $request)
             return redirect()->route('pin.form')->with('error', 'ไม่มีข้อมูลที่ต้องส่งต่อ');
         }
 
-        return redirect()->route('pushevidence.index', $queryParams)
-                         ->with('success', 'ยืนยันรหัส PIN สำเร็จ');
+        return redirect()->route('pushevidence.index', $queryParams);
+                        //  ->with('success', 'ยืนยันรหัส PIN สำเร็จ');
     }
 
     return redirect()->back()->with('error', 'รหัส PIN ไม่ถูกต้อง');
