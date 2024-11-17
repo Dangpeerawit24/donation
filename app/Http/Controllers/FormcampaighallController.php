@@ -76,6 +76,7 @@ class FormcampaighallController extends Controller
             'campaignsname' => 'required|string',
             'lineId' => 'required|string',
             'lineName' => 'required|string',
+            'name' => 'required|string',
             'value' => 'required|integer|min:1',
             'transactionID' => 'required|string',
             'evidence' => 'required|file|mimes:jpeg,png,jpg|max:2048',
@@ -86,19 +87,6 @@ class FormcampaighallController extends Controller
         if ($request->hasFile('evidence')) {
             $fileName = time() . '.' . $request->evidence->extension();
             $request->evidence->move(public_path('img/evidence/'), $fileName);
-        }
-
-        // ประมวลผลข้อมูลชื่อผู้ร่วมบุญ
-        $names = $request->input('name', []);
-        $newNames = $request->input('newName', []);
-        $finalNames = [];
-
-        foreach ($names as $index => $name) {
-            if ($name === 'new' && !empty($newNames[$index])) {
-                $finalNames[] = $newNames[$index];
-            } else {
-                $finalNames[] = $name;
-            }
         }
 
         // สร้างข้อมูลสำหรับ QR Code
@@ -132,7 +120,7 @@ class FormcampaighallController extends Controller
             'lineId' => $validated['lineId'],
             'lineName' => $validated['lineName'],
             'value' => $validated['value'],
-            'details' => implode(',', $finalNames),
+            'details' => $validated['name'],
             'evidence' => $fileName,
             'transactionID' => $validated['transactionID'],
             'qr_url' => $qrUrl, // เก็บ path ของ QR Code
