@@ -78,6 +78,9 @@
                                     <td class="text-center" style="vertical-align: middle; word-wrap: break-word;">
                                         @if ($Data->status == 'ส่งภาพกองบุญแล้ว')
                                             <a href="campaignstatusimg?url_img={{ $Data->url_img }}&campaignsname={{ $Data->campaignsname }}" class="btn btn-link" target=""><span class="badge bg-success">ส่งภาพ<br>กองบุญแล้ว</span></a>
+                                        @elseif
+                                            ($Data->status == 'รายรามเข้าระบบเรียบร้อยแล้ว')
+                                            <span class="badge bg-success">รายนามเข้า<br>ระบบเรียบร้อยแล้ว</span>
                                         @else
                                             <span class="badge bg-warning text-dark">รอ<br>ดำเนินการ</span>
                                         @endif
