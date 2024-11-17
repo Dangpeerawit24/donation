@@ -161,7 +161,6 @@ function updateDonationInputs() {
 
             if (cachedDetails) {
                 for (let i = 0; i < count; i++) {
-                    createInputFields(i);
                 }
             } else {
                 console.error('ยังไม่มีข้อมูลใน cachedDetails');
