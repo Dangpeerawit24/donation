@@ -66,6 +66,64 @@
                 </div> 
             </div> 
         </div> 
+        <div class="row">
+            <div class="col-lg-8 col-12">
+                <div class="card" style="background-color: #FFF;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>รายการกองบุญที่ยังเปิดอยู่</h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-light" id="campaignsTable">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th style="text-align:center; width:40%">ชื่อกองบุญ</th>
+                                        <th style="text-align:center; width:20%">จำนวนที่เปิดรับ</th>
+                                        <th style="text-align:center; width:20%">ร่วมบุญแล้ว</th>
+                                        <th style="text-align:center; width:20%">คงเหลือร่วมบุญได้</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- ข้อมูลจะถูกใส่ที่นี่ -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12 mt-3 mt-lg-0">
+                <div class="card" style="background-color: #FFF;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>ผู้ร่วมบุญสูงสุด</h3>
+                            <form method="GET">
+                                <select id="filterSelect" name="filter" onchange="handleFilterChange(this.value)">
+                                    <option value="month" selected>เดือนนี้</option> <!-- ตั้งค่าเริ่มต้น -->
+                                    <option value="year">ปีนี้</option>    
+                                    <option value="all">ทั้งหมด</option>
+                                </select>
+                            </form>                                                                              
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-light" id="usersTable">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th style="text-align:center; width:70%">ชื่อไลน์</th>
+                                        <th style="text-align:center; width:30%">ยอดรวม</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div> 
 </div> 
 <script>
@@ -97,5 +155,62 @@
 
  
     fetchDashboardData();
+
+    function fetchCampaigns() {
+        fetch('/api/campaigns')
+            .then(response => response.json())
+            .then(data => {
+                let tableBody = '';
+                data.forEach(campaign => {
+                    tableBody += `
+                        <tr>
+                            <td style="text-align:left;">${campaign.name}</td>
+                            <td style="text-align:center;">${campaign.stock}</td>
+                            <td style="text-align:center;">${campaign.total_donated}</td>
+                            <td style="text-align:center;">${campaign.remaining_stock}</td>
+                        </tr>
+                    `;
+                });
+                document.querySelector('#campaignsTable tbody').innerHTML = tableBody;
+            })
+            .catch(error => console.error('Error fetching campaigns:', error));
+    }
+
+    // เรียกฟังก์ชันเมื่อโหลดหน้าเสร็จ
+    document.addEventListener('DOMContentLoaded', fetchCampaigns);
+
+    // อัปเดตข้อมูลทุก 10 วินาที
+    setInterval(fetchCampaigns, 5000);
+
+    function handleFilterChange(filter) {
+    fetchUsers(filter);
+}
+
+function handleFilterChange(filter) {
+    fetchUsers(filter); // เรียกฟังก์ชัน fetchUsers พร้อมส่งค่าที่เลือก
+}
+
+function fetchUsers(filter = 'month') { // ค่าเริ่มต้นเป็น "month"
+    fetch(`/api/users?filter=${filter}`) // ดึงข้อมูลจาก API
+        .then(response => response.json())
+        .then(data => {
+            let tableBody = '';
+            data.forEach(user => {
+                tableBody += `
+                    <tr>
+                        <td style="text-align:left; vertical-align: middle; word-wrap: break-word;">${user.lineName}</td>
+                        <td style="text-align:center;">${user.total_amount}</td>
+                    </tr>
+                `;
+            });
+            // เติมข้อมูลลงในตาราง
+            document.querySelector('#usersTable tbody').innerHTML = tableBody;
+        })
+        .catch(error => console.error('Error fetching users:', error));
+}
+
+// เรียกฟังก์ชัน fetchUsers ด้วยค่าเริ่มต้น "month" เมื่อโหลดหน้า
+document.addEventListener('DOMContentLoaded', () => fetchUsers('month'));
+
 </script>
 @endSection

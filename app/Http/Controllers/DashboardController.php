@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -73,5 +74,56 @@ class DashboardController extends Controller
             'total_campaign_month' => $total_campaign_month,
             'total_campaign_year' => $total_campaign_year,
         ]);
+    }
+
+    public function getActiveCampaigns()
+    {
+        $campaigns = DB::table('campaigns')
+            ->leftJoin('campaign_transactions', 'campaigns.id', '=', 'campaign_transactions.campaignsid')
+            ->select(
+                'campaigns.id',
+                'campaigns.name',
+                'campaigns.stock',
+                DB::raw('COALESCE(SUM(campaign_transactions.value), 0) as total_donated'),
+                DB::raw('campaigns.stock - COALESCE(SUM(campaign_transactions.value), 0) as remaining_stock')
+            )
+            ->where('campaigns.status', 'เปิดกองบุญ')
+            ->groupBy('campaigns.id', 'campaigns.name', 'campaigns.stock')
+            ->get();
+
+        return response()->json($campaigns);
+    }
+
+    public function getActiveuser(Request $request)
+    {
+        $filter = request('filter', 'month'); // ค่าเริ่มต้นเป็น 'month'
+
+        $query = DB::table('campaign_transactions')
+            ->join('campaigns', 'campaign_transactions.campaignsid', '=', 'campaigns.id')
+            ->select(
+                'campaign_transactions.lineName',
+                DB::raw('SUM(campaign_transactions.value) as value'),
+                DB::raw('SUM(campaign_transactions.value * campaigns.price) as total_amount')
+            )
+            ->groupBy('campaign_transactions.lineName');
+
+        // กรองข้อมูลตามตัวเลือก
+        if ($filter === 'month') {
+            $query->whereBetween('campaign_transactions.created_at', [
+                Carbon::now()->startOfMonth(),
+                Carbon::now()->endOfMonth(),
+            ]);
+        } elseif ($filter === 'year') {
+            $query->whereBetween('campaign_transactions.created_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ]);
+        }
+
+        // หากเลือก "all" ไม่ต้องกรองวันที่
+
+        $users = $query->orderBy('total_amount', 'desc')->get();
+
+        return response()->json($users);
     }
 }

@@ -68,6 +68,10 @@ Route::middleware(['auth', 'verified', 'super-admin'])->prefix('super-admin')->n
     Route::get('/qrcode', [QRCodeController::class, 'index'])->name('qr-code.index');
 });
 
+// Fetch API 
+Route::get('/api/campaigns', [DashboardController::class, 'getActiveCampaigns']);
+Route::get('/api/users', [DashboardController::class, 'getActiveuser']);
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
