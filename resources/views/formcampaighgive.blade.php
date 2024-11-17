@@ -37,7 +37,7 @@
                     <form action="{{ Route('formcampaighgive.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="d-flex justify-content-start align-items-center">
-                            <h4 style="color: var(--bs-body-color);font-weight: bold;">กรอกข้อมูลผู้ร่วมบุญ</h4>
+                            <h4 style="color: var(--bs-body-color);font-weight: bold;">กรอกข้อมูลผู้ร่วมกิจกรรม</h4>
                         </div>
                         <div>
                             <h5 style="color: var(--bs-emphasis-color);">กรุณากรอก ชื่อ-นามสกุล ผู้ร่วมกิจกรรม</h5>

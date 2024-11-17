@@ -79,7 +79,7 @@
                                         @if ($Data->status == 'ส่งภาพกองบุญแล้ว')
                                             <a href="campaignstatusimg?url_img={{ $Data->url_img }}&campaignsname={{ $Data->campaignsname }}" class="btn btn-link" target=""><span class="badge bg-success">ส่งภาพ<br>กองบุญแล้ว</span></a>
                                         @elseif ($Data->status == 'รายนามเข้าระบบเรียบร้อยแล้ว')
-                                            <span class="badge bg-success">รายนามเข้า<br>ระบบเรียบร้อยแล้ว</span>
+                                            <span class="badge bg-success">รายนาม<br>เข้าระบบแล้ว</span>
                                         @else
                                             <span class="badge bg-warning text-dark">รอ<br>ดำเนินการ</span>
                                         @endif
