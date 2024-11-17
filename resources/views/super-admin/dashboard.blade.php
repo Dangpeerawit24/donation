@@ -68,7 +68,7 @@
         </div> 
         <div class="row">
             <div class="col-lg-8 col-12">
-                <div class="card" style="background-color: #FFF;">
+                <div class="card" style="background-color: #FFF; height: 600px">
                     <div class="card">
                         <div class="card-header">
                             <h3>รายการกองบุญที่ยังเปิดอยู่</h3>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-12 mt-3 mt-lg-0">
-                <div class="card" style="background-color: #FFF;">
+                <div class="card" style="background-color: #FFF; height: 600px">
                     <div class="card">
                         <div class="card-header">
                             <h3>ผู้ร่วมบุญสูงสุด</h3>
