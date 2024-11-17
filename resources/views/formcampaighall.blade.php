@@ -177,8 +177,6 @@
 
 function updateDonationInputs() {
         const count = parseInt(document.getElementById('donationCount').value, 10);
-        const donationInputsContainer = document.getElementById('donationInputs');
-        donationInputsContainer.innerHTML = '';
 
         if (!isNaN(count) && count > 0) {
             const totalAmount = count * pricePerUnit;
