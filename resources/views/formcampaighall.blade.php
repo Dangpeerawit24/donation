@@ -152,29 +152,6 @@
             .catch(error => console.error('Error fetching details:', error));
     };
 
-    function createInputFields(index) {
-        const inputDiv = document.createElement('div');
-        inputDiv.className = 'input-container';
-
-        let options = `<select name="name[]" id="donorName${index}" onchange="checkNewEntry(this, ${index})" style="width: 100%; text-align: center; height: 45.4286px;" required>
-                        <option value="">--กดเลือกรายนามที่เคยร่วมบุญ--</option>`;
-
-        cachedDetails.forEach(detail => {
-            options += `<option value="${detail}">${detail}</option>`;
-        });
-
-        options += `<option value="new">เพิ่มรายการใหม่</option></select>`;
-
-        const newInput =
-            `<input type="text" name="newName[]" id="newDonorName" style="width: 100%; text-align: center; height: 45.4286px; align-content: center; display: none;" placeholder="ชื่อ-นามสกุล" required>`;
-
-        inputDiv.innerHTML = `<label for="donorName${index}">กรอกชื่อ-นามสกุล ชุดที่ ${index + 1}</label>` + options +
-            newInput;
-
-        document.getElementById('donationInputs').appendChild(inputDiv);
-    }
-
-
 function updateDonationInputs() {
         const count = parseInt(document.getElementById('donationCount').value, 10);
 
@@ -193,40 +170,6 @@ function updateDonationInputs() {
             document.getElementById('totalAmountDisplay').innerText = "0.00 บาท";
         }
     }
-
-    function checkNewEntry(select, index) {
-        const newInput = document.getElementById(`newDonorName${index}`);
-        if (select.value === "new") {
-            newInput.style.display = 'block';
-            newInput.required = true;
-            newInput.value = '';
-        } else {
-            newInput.style.display = 'none';
-            newInput.required = false;
-        }
-    }
-
-    function validateForm() {
-        let isValid = true;
-
-        document.querySelectorAll('input[name="newName[]"]').forEach(input => {
-            if (input.style.display === 'block' && !input.value.trim()) {
-                isValid = false;
-                input.setCustomValidity("กรุณากรอกชื่อ-นามสกุล");
-            } else {
-                input.setCustomValidity("");
-            }
-        });
-
-        return isValid;
-    }
-
-    document.querySelector('form').addEventListener('submit', function (e) {
-        if (!validateForm()) {
-            e.preventDefault();
-            swal("กรุณากรอกข้อมูลให้ครบถ้วน", "", "error");
-        }
-    });
 	
 	function copyToClipboard(id) {
         const inputField = document.getElementById(id);
@@ -248,14 +191,6 @@ function updateDonationInputs() {
 
     function submitForm() {
     const fileInput = document.getElementById('evidence');
-    const donorInputs = document.querySelectorAll('[id^="donorName"], [id^="newDonorName"]');
-
-    const allInputsFilled = Array.from(donorInputs).every(input => {
-        if (input.style.display !== 'none') {
-            return input.value.trim() !== "";
-        }
-        return true;
-    });
 
     if (fileInput.files.length === 0 || !allInputsFilled) {
         swal({
