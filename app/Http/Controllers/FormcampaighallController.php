@@ -136,7 +136,7 @@ class FormcampaighallController extends Controller
             'evidence' => $fileName,
             'transactionID' => $validated['transactionID'],
             'qr_url' => $qrUrl, // เก็บ path ของ QR Code
-            'status' => "รายรามเข้าระบบเรียบร้อยแล้ว",
+            'status' => "รายนามเข้าระบบเรียบร้อยแล้ว",
             'notify' => "1",
             'created_at' => now(),
             'updated_at' => now(),
