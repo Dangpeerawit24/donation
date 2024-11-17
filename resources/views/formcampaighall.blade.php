@@ -47,6 +47,9 @@
                                 min="0" onchange="updateDonationInputs()">
                         </div>
                         <div>
+                            <h5 style="color: var(--bs-emphasis-color);">ชื่อ-นามสกุลผู้ร่วมบุญ</h5>
+                        </div>
+                        <div>
                             <input style="width: 100%; text-align: center; height: 45.4286px;" type="text" name="name" id="name" required placeholder="กรุณากรอก ชื่อ-นามสกุล">
                         </div>
                         <div class="d-flex justify-content-start" style="margin-top: 9px;">
