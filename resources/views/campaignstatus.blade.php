@@ -81,7 +81,7 @@
                                         @elseif
                                             ($Data->status == 'รายรามเข้าระบบเรียบร้อยแล้ว')
                                             <span class="badge bg-success">รายนามเข้า<br>ระบบเรียบร้อยแล้ว</span>
-                                        @else
+                                        @elseif
                                             <span class="badge bg-warning text-dark">รอ<br>ดำเนินการ</span>
                                         @endif
                                     </td>
