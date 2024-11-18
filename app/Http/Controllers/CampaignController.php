@@ -50,6 +50,7 @@ class CampaignController extends Controller
         // บันทึกข้อมูล
         $campaign = Campaign::create($data);
         
+        if ($campaign->status == "เปิดกองบุญ"){
         // ข้อความ Broadcast
         $lineToken = env('LINE_CHANNEL_ACCESS_TOKEN');
         $linkapp = env('APP_URL');
@@ -66,6 +67,7 @@ class CampaignController extends Controller
             "📌 ร่วมบุญผ่านระบบกองบุญออนไลน์ได้ที่: $linkapp";
 
         $imageUrl = asset('img/campaign/' . $campaign->campaign_img); 
+        // $imageUrl = "https://images.unsplash.com/photo-1720048169707-a32d6dfca0b3?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8"; 
 
         // ส่งคำขอไปยัง LINE OA
         $response = Http::withHeaders([
@@ -93,8 +95,9 @@ class CampaignController extends Controller
         if ($response->successful()) {
             return redirect()->back()->with('success', 'เพิ่มกองบุญและส่งข้อความ Broadcast พร้อมรูปภาพเรียบร้อยแล้ว.');
         } else {
-            return redirect()->back()->with('error', 'เพิ่มกองบุญสำเร็จ แต่ส่งข้อความ Broadcast ไม่สำเร็จ.');
+            return redirect()->back()->with('success', 'เพิ่มกองบุญสำเร็จ แต่ส่งข้อความ Broadcast ไม่สำเร็จ.');
         }
+    } else {return redirect()->back()->with('success', 'เพิ่มกองบุญสำเร็จ');}
     }
 
     public function update(Request $request, $id)
