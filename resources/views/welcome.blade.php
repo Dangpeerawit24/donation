@@ -1,131 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบกองบุญออนไลน์</title>
     <link rel="icon" type="" href="{{ asset('img/AdminLogo.png') }}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        #loader.show {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border: 0.3em solid #f3f3f3;
+            border-top: 0.3em solid #3498db;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body style="background-color: var(--bs-danger-text-emphasis);">
-    <div id="loader">
-        <div class="spinner"></div>
-    </div>
 
-    <nav class="navbar navbar-expand-md bg-body py-3">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="/">
-                <img width="40" height="40" src="{{ asset('img/AdminLogo.png') }}" />
-                <span style="font-size: 16px;font-weight: bold;">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</span>
-            </a>
-            <a class="btn btn-primary" role="button" href="{{ url('campaignstatus?userId=' . $profile['userId']) }}" style="font-size: 13px;">สถานะกองบุญ</a>
+<body class="bg-gray-300	">
+    <div id="loader" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50 hidden">
+        <div class="spinner-border text-white" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-    </nav>
-
-    <div class="text-center">
-        <h1 class="my-3" style="color: #fff;">กองบุญออนไลน์</h1>
-        <h3 style="color: #fff;">ที่ยังเปิดให้ร่วมบุญได้</h3>
     </div>
 
-    <div class="container">
+    <div class="row w-full h-20 fixed top-0 bg-red-950 content-center justify-items-center">
+        <nav class="flex items-center	">
+            <img src="{{ asset('img/AdminLogo.png') }}" width="50px" height="50px" alt="">
+            <h3 class=" mx-2 text-white text-2xl">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</h3>
+        </nav>
+    </div>
+    <div class=" grid row w-full h-full my-20 content-center justify-center">
+        <h2 class=" text-3xl text-center mb-4 mt-4">กองบุญที่เปิดให้ร่วมบุญ</h2>
+        @if ($campaigns->isEmpty())
+            <div class="text-center text-gray-500 mt-10">
+                <p class="text-xl">ขออภัย ไม่มีแคมเปญที่เปิดให้ร่วมบุญในขณะนี้</p>
+            </div>
+        @endif
+
         @foreach ($campaigns as $campaign)
-            <div class="card mb-3 mt-4">
-                <div class="card-body">
-                    <div class="text-center">
-                        <img src="{{ asset('img/campaign/' . $campaign->campaign_img) }}" class="rounded" width="300" height="300" alt="Campaign Image">
-                    </div>
-                    <h4 class="text-center my-3 "><strong>กองบุญ{{ $campaign->name }}</strong></h4>
-                    <p class="text-center text-muted">{!! str_replace('/n', '<br>', e($campaign->description)) !!}</p>
-                    <div class="text-center">
-                        @php
-                            $details = $campaign->details;
-                        @endphp
-                        @if ($details == 'ชื่อสกุล')
-                            <a class="btn btn-primary" href="{{ url('formcampaigh?campaign_id=' . $campaign->id) }}">กดเพื่อร่วมบุญ</a>
-                        @elseif ($details == 'ชื่อวันเดือนปีเกิด')
-                            <a class="btn btn-primary" href="{{ url('formcampaighbirthday?campaign_id=' . $campaign->id) }}">กดเพื่อร่วมบุญ</a>
-                        @elseif ($details == 'ตามศรัทธา')
-                            <a class="btn btn-primary" href="{{ url('formcampaighall?campaign_id=' . $campaign->id) }}">กดเพื่อร่วมบุญ</a>
-                        @elseif ($details == 'กิจกรรม')
-                            <a class="btn btn-primary" href="{{ url('formcampaighgive?campaign_id=' . $campaign->id) }}">กดเพื่อร่วมบุญ</a>
-                        @else
-                            <a class="btn btn-primary" href="{{ url('formcampaightext?campaign_id=' . $campaign->id) }}">กดเพื่อร่วมบุญ</a>
-                        @endif
-                    </div>
-                </div>
+            <div
+                class="max-w-sm p-6 mb-4 bg-white border border-gray-200 rounded-3xl shadow dark:bg-gray-800 dark:border-gray-700">
+                <img src="{{ asset('img/campaign/' . $campaign->campaign_img) }}" class="rounded-xl" width="100%"
+                    alt="">
+                <h2 class="text-2xl mt-2">กองบุญ{{ $campaign->name }}</h2>
+                <p class="mt-1 text-wrap">{!! str_replace('/n', '<br>', e($campaign->description)) !!}</p>
+                @php
+                    $details = $campaign->details;
+                @endphp
+                @if ($details == 'ชื่อสกุล')
+                    <a href="{{ url('formcampaigh?campaign_id=' . $campaign->id) }}"><button
+                            class=" w-full mt-3 py-2 px-5 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-800 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75">
+                            กดเพื่อร่วมบุญ
+                        </button></a>
+                @elseif ($details == 'ชื่อวันเดือนปีเกิด')
+                    <a href="{{ url('formcampaighbirthday?campaign_id=' . $campaign->id) }}"><button
+                            class=" w-full mt-3 py-2 px-5 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-800 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75">
+                            กดเพื่อร่วมบุญ
+                        </button></a>
+                @elseif ($details == 'ตามศรัทธา')
+                    <a href="{{ url('formcampaighall?campaign_id=' . $campaign->id) }}"><button
+                            class=" w-full mt-3 py-2 px-5 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-800 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75">
+                            กดเพื่อร่วมบุญ
+                        </button></a>
+                @elseif ($details == 'กิจกรรม')
+                    <a href="{{ url('formcampaighgive?campaign_id=' . $campaign->id) }}"><button
+                            class=" w-full mt-3 py-2 px-5 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-800 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75">
+                            กดเพื่อร่วมบุญ
+                        </button></a>
+                @else
+                    <a href="{{ url('formcampaightext?campaign_id=' . $campaign->id) }}"><button
+                            class=" w-full mt-3 py-2 px-5 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-800 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75">
+                            กดเพื่อร่วมบุญ
+                        </button></a>
+                @endif
             </div>
         @endforeach
     </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const loader = document.getElementById('loader');
-
-        window.addEventListener('pageshow', function (event) {
-            if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
-                loader.classList.remove('show');
-            }
+    <div
+        class="row h-20 flex fixed inset-x-0 bottom-0 px-20 rounded-t-xl  bg-red-950 items-center justify-between text-white">
+        <div class=" items-center justify-items-center text-center">
+            <a href="/"><i class="fa-solid fa-house fa-xl"></i></a>
+            <a href="/">
+                <h3 class="mt-1">หน้าหลัก</h3>
+            </a>
+        </div>
+        <div class=" items-center justify-items-center text-center">
+            <a href="{{ url('campaignstatus?userId=' . $profile['userId']) }}"><i
+                    class="fa-solid fa-clipboard-list fa-xl"></i></a>
+            <a href="{{ url('campaignstatus?userId=' . $profile['userId']) }}">
+                <h3 class="mt-1">สถานะกองบุญ</h3>
+            </a>
+        </div>
+    </div>
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'ขออนุโมทนาบุญกับ<br>คุณ{{ session('lineName') }}',
+                html: 'ที่ได้ร่วมกองบุญ{{ session('campaignname') }}',
+                timer: 5000,
+                showConfirmButton: false
+            });
+        @endif
+    </script>
+    <script>
+        // แสดงตัวโหลดเมื่อคลิกลิงก์หรือส่งฟอร์ม
+        document.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.getElementById('loader').classList.remove('hidden');
+            });
         });
 
-        document.addEventListener('click', function (e) {
-            if (e.target.tagName === 'A' && e.target.href) {
-                e.preventDefault(); 
-                loader.classList.add('show');
-                setTimeout(() => {
-                    window.location.href = e.target.href;
-                }, 300); 
-            }
+        document.querySelectorAll('form').forEach(function(form) {
+            form.addEventListener('submit', function() {
+                document.getElementById('loader').classList.remove('hidden');
+            });
         });
-    });
 
-    @if(session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: 'ขออนุโมทนาบุญกับ<br>คุณ{{ session('lineName') }}',
-            html: 'ที่ได้ร่วมกองบุญ{{ session('campaignname') }}',
-            timer: 5000,
-            showConfirmButton: false
+        // ใช้ pageshow event เพื่อจัดการกับกรณีเมื่อย้อนกลับหน้าด้วยปุ่ม back
+        window.addEventListener('pageshow', function(event) {
+            // เมื่อโหลดเสร็จให้ซ่อนตัวโหลด
+            document.getElementById('loader').classList.add('hidden');
         });
-    @endif
-</script>
+
+        // เมื่อโหลดหน้าเสร็จให้ซ่อนตัวโหลด
+        window.addEventListener('load', function() {
+            document.getElementById('loader').classList.add('hidden');
+        });
+    </script>
 
 </body>
+
 </html>
