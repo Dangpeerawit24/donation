@@ -38,7 +38,7 @@
                         <div class="d-flex justify-content-start align-items-center">
                             <h4 style="color: var(--bs-body-color);font-weight: bold;">กรอกข้อมูลผู้ร่วมบุญ</h4>
                         </div>
-                        <div>
+                        <div class="mt-2">
                             <h5 style="color: var(--bs-emphasis-color);">จำนวนเงินที่ต้องการร่วมบุญ</h5>
                         </div>
                         <div>
@@ -46,12 +46,12 @@
                                 style="width: 100%; text-align: center; height: 45.4286px;" placeholder="0"
                                 min="0" onchange="updateDonationInputs()">
                         </div>
-                        <div>
+                        <div class="mt-3">
                             <h5 style="color: var(--bs-emphasis-color);">ชื่อ-นามสกุลผู้ร่วมบุญ</h5>
                         </div>
                         <div>
-                            <input style="width: 100%; text-align: center; height: 45.4286px;" type="text" name="name" id="name" required placeholder="กรุณากรอก ชื่อ-นามสกุล">
-                        </div>
+                            <textarea style="width: 100%; text-align: center; align-content: center; height: 100px;" name="name" id="name" required placeholder="กรุณากรอก ชื่อ-นามสกุล"></textarea>
+                        </div>                        
                         <div class="d-flex justify-content-start" style="margin-top: 9px;">
                             <h5 style="color: var(--bs-emphasis-color);font-weight: bold;">แนบหลักฐานการโอนเงิน</h5>
                         </div>
