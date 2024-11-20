@@ -9,32 +9,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
     <style>
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            border: 0.3em solid #f3f3f3;
-            border-top: 0.3em solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .spinner {
+            width: 200px;  /* กำหนดขนาดของรูปภาพ */
+            height: 200px;
+            animation: spin 2s linear infinite;  /* หมุนรูปภาพตลอดเวลา */
         }
-
+    
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 
 <body class="bg-gray-300	">
     <div id="loader" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-        <div class="spinner-border text-white" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+        <img src="{{asset('img/loading.png')}}" alt="Loading..." class="spinner">
     </div>
     <div class="row w-full h-20 fixed top-0 bg-red-950 content-center justify-items-center">
         <nav class="flex items-center	">
