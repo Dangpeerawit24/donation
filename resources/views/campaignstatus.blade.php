@@ -45,7 +45,7 @@
     <div class=" grid row w-full h-full my-20 content-center justify-center">
         <h2 class=" text-3xl text-center mb-4 mt-4">ติดตามสถานะกองบุญ</h2>
         <div
-            class=" min-w-80 p-2 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
+            class=" w-11/12 p-2 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700" style="justify-self: center;">
             <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                 <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
                     <tr>
