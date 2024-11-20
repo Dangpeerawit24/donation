@@ -29,7 +29,7 @@
         }
     </style>
 </head>
-<div id="loader" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50 hidden">
+<div id="loader" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
     <div class="spinner-border text-white" role="status">
         <span class="sr-only">Loading...</span>
     </div>
