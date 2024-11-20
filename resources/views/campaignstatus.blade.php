@@ -57,19 +57,19 @@
                     @php $i = 0; @endphp
                     @foreach ($Datas as $Data)
                         <tr class="border-b border-neutral-200 dark:border-white/10">
-                            <td class="whitespace-wrap  py-3 font-medium">กองบุญ{{ $Data->campaignsname }}<br>รายนาม:
+                            <td class="whitespace-wrap text-lg  py-3 font-medium">กองบุญ{{ $Data->campaignsname }}<br>รายนาม:
                                 {{ $Data->details }}{{ $Data->detailsbirthday }}{{ $Data->detailstext }}</td>
                             <td class="whitespace-nowrap  py-3 text-center">
                                 @if ($Data->status == 'ส่งภาพกองบุญแล้ว')
                                     <a href="campaignstatusimg?url_img={{ $Data->url_img }}&campaignsname={{ $Data->campaignsname }}"
                                         class="btn btn-link" target=""><span
-                                            class="inline-flex text-center items-center rounded-md bg-green-700 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-green-600/20">ส่งภาพ<br>กองบุญแล้ว</span></a>
+                                            class="inline-flex text-center items-center rounded-md bg-green-700 px-2 py-1 text-sm font-medium text-white ring-1 ring-inset ring-green-600/20">ส่งภาพ<br>กองบุญแล้ว</span></a>
                                 @elseif ($Data->status == 'รายนามเข้าระบบเรียบร้อยแล้ว')
                                     <span
-                                        class="inline-flex text-center items-center rounded-md bg-green-700 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-green-600/20">รายนาม<br>เข้าระบบแล้ว</span>
+                                        class="inline-flex text-center items-center rounded-md bg-green-700 px-2 py-1 text-sm font-medium text-white ring-1 ring-inset ring-green-600/20">รายนาม<br>เข้าระบบแล้ว</span>
                                 @else
                                     <span
-                                        class="inline-flex text-center items-center rounded-md bg-yellow-500 px-2 py-1 text-xs font-medium text-black ring-1 ring-inset ring-green-600/20">รอ<br>ดำเนินการ</span>
+                                        class="inline-flex text-center items-center rounded-md bg-yellow-500 px-2 py-1 text-sm font-medium text-black ring-1 ring-inset ring-green-600/20">รอ<br>ดำเนินการ</span>
                                 @endif
                             </td>
                         </tr>
