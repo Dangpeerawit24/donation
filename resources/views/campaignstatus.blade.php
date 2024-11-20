@@ -31,7 +31,7 @@
 </head>
 
 <body class="bg-gray-300	">
-    <div id="loader" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50 hidden">
+    <div id="loader" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
         <div class="spinner-border text-white" role="status">
             <span class="sr-only">Loading...</span>
         </div>
@@ -45,7 +45,7 @@
     <div class=" grid row w-full h-full my-20 content-center justify-center">
         <h2 class=" text-3xl text-center mb-4 mt-4">ติดตามสถานะกองบุญ</h2>
         <div
-            class="max-w-sm p-2 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
+            class=" min-w-80 p-2 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
             <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
                 <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
                     <tr>
