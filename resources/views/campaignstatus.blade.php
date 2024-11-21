@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
     <style>
         .spinner {
-            width: 200px;  /* กำหนดขนาดของรูปภาพ */
+            width: 200px; 
             height: 200px;
-            animation: spin 2s linear infinite;  /* หมุนรูปภาพตลอดเวลา */
+            animation: spin 2s linear infinite; 
         }
     
         @keyframes spin {
@@ -78,7 +78,6 @@
         </div>
     </div>
     <script>
-        // แสดงตัวโหลดเมื่อคลิกลิงก์หรือส่งฟอร์ม
         document.querySelectorAll('a').forEach(function(link) {
             link.addEventListener('click', function() {
                 document.getElementById('loader').classList.remove('hidden');
@@ -91,13 +90,11 @@
             });
         });
 
-        // ใช้ pageshow event เพื่อจัดการกับกรณีเมื่อย้อนกลับหน้าด้วยปุ่ม back
         window.addEventListener('pageshow', function(event) {
-            // เมื่อโหลดเสร็จให้ซ่อนตัวโหลด
+           
             document.getElementById('loader').classList.add('hidden');
         });
 
-        // เมื่อโหลดหน้าเสร็จให้ซ่อนตัวโหลด
         window.addEventListener('load', function() {
             document.getElementById('loader').classList.add('hidden');
         });
