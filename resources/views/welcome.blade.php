@@ -12,9 +12,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .spinner {
-            width: 200px;  /* กำหนดขนาดของรูปภาพ */
+            width: 200px;
             height: 200px;
-            animation: spin 2s linear infinite;  /* หมุนรูปภาพตลอดเวลา */
+            animation: spin 2s linear infinite; 
         }
     
         @keyframes spin {
@@ -40,7 +40,7 @@
         <h2 class=" text-3xl text-center mb-4 mt-4">กองบุญที่เปิดให้ร่วมบุญ</h2>
         @if ($campaigns->isEmpty())
             <div class="text-center text-gray-500 mt-10">
-                <p class="text-xl">ขออภัย ไม่มีแคมเปญที่เปิดให้ร่วมบุญในขณะนี้</p>
+                <p class="text-xl">ขออภัย ไม่มีกองบุญที่เปิดให้ร่วมบุญในขณะนี้</p>
             </div>
         @endif
 
@@ -111,7 +111,6 @@
         @endif
     </script>
     <script>
-        // แสดงตัวโหลดเมื่อคลิกลิงก์หรือส่งฟอร์ม
         document.querySelectorAll('a').forEach(function(link) {
             link.addEventListener('click', function() {
                 document.getElementById('loader').classList.remove('hidden');
@@ -124,13 +123,11 @@
             });
         });
 
-        // ใช้ pageshow event เพื่อจัดการกับกรณีเมื่อย้อนกลับหน้าด้วยปุ่ม back
         window.addEventListener('pageshow', function(event) {
-            // เมื่อโหลดเสร็จให้ซ่อนตัวโหลด
+          
             document.getElementById('loader').classList.add('hidden');
         });
 
-        // เมื่อโหลดหน้าเสร็จให้ซ่อนตัวโหลด
         window.addEventListener('load', function() {
             document.getElementById('loader').classList.add('hidden');
         });
