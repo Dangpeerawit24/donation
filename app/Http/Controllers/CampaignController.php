@@ -64,7 +64,7 @@ class CampaignController extends Controller
             "💰 มูลนิธิเมตตาธรรมรัศมี\n" .
             "ธ.กสิกรไทย เลขที่บัญชี 171-1-75423-3\n" .
             "ธ.ไทยพาณิชย์ เลขที่บัญชี 649-242269-4\n\n" .
-            "📌 ร่วมบุญผ่านระบบกองบุญออนไลน์ได้ที่: $linkapp";
+            "📌 ร่วมบุญผ่านระบบกองบุญออนไลน์ได้ที่ : https://donation.kuanimtungpichai.com?openExternalBrowser=1";
 
         $imageUrl = asset('img/campaign/' . $campaign->campaign_img); 
         // $imageUrl = "https://images.unsplash.com/photo-1720048169707-a32d6dfca0b3?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8"; 
