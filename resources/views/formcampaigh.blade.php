@@ -51,7 +51,7 @@
                             <h5 style="color: var(--bs-emphasis-color);font-weight: bold;">แนบหลักฐานการโอนเงิน</h5>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="margin-top: 2px;"><input
-                                class="form-control" type="file" id="evidence" name="evidence" required></div>
+                                class="form-control" type="file" id="evidence" name="evidence" accept="image/*" required></div>
                         <input type="hidden" id="campaignsid" name="campaignsid" value="{{ $data['campaign']->id }}">
                         <input type="hidden" id="campaignsname" name="campaignsname"
                             value="{{ $data['campaign']->name }}">
