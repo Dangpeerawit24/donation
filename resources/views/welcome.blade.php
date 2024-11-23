@@ -38,7 +38,7 @@
     </div>
     <div class=" grid row w-full h-full my-20 content-center justify-center">
         @if ($campaigns->isEmpty())
-            <div class="text-center w-full  items-center text-gray-500 mt-10">
+            <div class="text-center w-full mt-36 items-center text-gray-500">
                 <p class="text-xl">ขออภัย ไม่มีกองบุญที่เปิดให้ร่วมบุญในขณะนี้</p>
             </div>
         @endif
