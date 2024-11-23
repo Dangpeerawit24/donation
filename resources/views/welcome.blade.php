@@ -37,9 +37,8 @@
         </nav>
     </div>
     <div class=" grid row w-full h-full my-20 content-center justify-center">
-        <h2 class=" text-3xl text-center mb-4 mt-4">กองบุญที่เปิดให้ร่วมบุญ</h2>
         @if ($campaigns->isEmpty())
-            <div class="text-center text-gray-500 mt-10">
+            <div class="text-center w-full h-screen items-center text-gray-500 mt-10">
                 <p class="text-xl">ขออภัย ไม่มีกองบุญที่เปิดให้ร่วมบุญในขณะนี้</p>
             </div>
         @endif
