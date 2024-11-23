@@ -45,7 +45,7 @@
 
         @foreach ($campaigns as $campaign)
             <div
-                class="max-w-sm p-6 mb-4 mt-8 bg-white border border-gray-200 rounded-3xl shadow dark:bg-gray-800 dark:border-gray-700">
+                class="max-w-sm p-6 mb-4 mt-5 bg-white border border-gray-200 rounded-3xl shadow dark:bg-gray-800 dark:border-gray-700">
                 <img src="{{ asset('img/campaign/' . $campaign->campaign_img) }}" class="rounded-xl" width="100%"
                     alt="">
                 <h2 class="text-2xl mt-2">กองบุญ{{ $campaign->name }}</h2>
@@ -103,7 +103,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'ขออนุโมทนาบุญกับ<br>คุณ{{ session('lineName') }}',
-                html: 'ที่ได้ร่วมกองบุญ{{ session('campaignname') }}',
+                html: 'ที่ได้ร่วมกองบุญ<br>{{ session('campaignname') }}',
                 timer: 5000,
                 showConfirmButton: false
             });
