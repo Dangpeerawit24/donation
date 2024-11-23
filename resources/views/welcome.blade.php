@@ -101,7 +101,7 @@
     </div>
     <script>
         if (navigator.userAgent.includes("Line")) {
-    window.location.href = "https://donation.kuanimitungpichai.com?openExternalBrowser=1";
+    window.location.href = "https://donation.kuanimitungpichai.com";
 }
     </script>
     <script>
