@@ -100,6 +100,11 @@
         </div>
     </div>
     <script>
+        if (navigator.userAgent.includes("Line")) {
+    window.location.href = "https://donation.kuanimitungpichai.com?openExternalBrowser=1";
+}
+    </script>
+    <script>
         @if (session('success'))
             Swal.fire({
                 icon: 'success',
