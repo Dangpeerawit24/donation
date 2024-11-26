@@ -50,13 +50,15 @@
                             <h5 style="color: var(--bs-emphasis-color);">ชื่อ-นามสกุลผู้ร่วมบุญ</h5>
                         </div>
                         <div>
-                            <textarea style="width: 100%; text-align: center; align-content: center; height: 100px;" name="name" id="name" required placeholder="กรุณากรอก ชื่อ-นามสกุล"></textarea>
-                        </div>                        
+                            <textarea style="width: 100%; text-align: center; align-content: center; height: 100px;" name="name" id="name"
+                                required placeholder="กรุณากรอก ชื่อ-นามสกุล"></textarea>
+                        </div>
                         <div class="d-flex justify-content-start" style="margin-top: 9px;">
                             <h5 style="color: var(--bs-emphasis-color);font-weight: bold;">แนบหลักฐานการโอนเงิน</h5>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="margin-top: 2px;"><input
-                                class="form-control" type="file" id="evidence" name="evidence" accept="image/*" required></div>
+                                class="form-control" type="file" id="evidence" name="evidence" accept="image/*"
+                                required></div>
                         <input type="hidden" id="campaignsid" name="campaignsid" value="{{ $data['campaign']->id }}">
                         <input type="hidden" id="campaignsname" name="campaignsname"
                             value="{{ $data['campaign']->name }}">
@@ -94,6 +96,10 @@
                 <div style="margin-top: 8px;">
                     <h4 style="color: var(--bs-body-color);font-weight: bold;">รายละเอียดการโอนเงิน</h4>
                 </div>
+                <div style="text-align: center; text-align: -webkit-center; margin-top: 10px;">
+                    <img id="qr" src="https://promptpay.io/0993000067720.png" width="150px" height="150px"
+                        alt="" style="display: none;">
+                </div>
                 <div style="text-align: center;">
                     <h5 style="color: var(--bs-emphasis-color);text-align: center;">💰มูลนิธิเมตตาธรรมรัศมี</h5>
                 </div>
@@ -104,8 +110,9 @@
                     <div class="row d-flex justify-content-center align-items-center"
                         style="margin-right: -12px;margin-top: 5px;">
                         <div class="col-8 d-flex justify-content-end justify-content-xl-center align-items-xl-center">
-                            <input class="form-control" type="text" id="accountNumber1" placeholder="171-1-75423-3"
-                                value="171-1-75423-3" style="text-align: center;" readonly>
+                            <input class="form-control" type="text" id="accountNumber1"
+                                placeholder="171-1-75423-3" value="171-1-75423-3" style="text-align: center;"
+                                readonly>
                             <button class="btn btn-secondary" onclick="copyToClipboard('accountNumber1')"
                                 style="margin-left: 10px;">คัดลอก</button>
                         </div>
@@ -140,7 +147,7 @@
 </body>
 <script>
     let cachedDetails = null;
-    const pricePerUnit = {{ $campaignData[0]['campaign']->price ?? 0 }}; 
+    const pricePerUnit = {{ $campaignData[0]['campaign']->price ?? 0 }};
 
     window.onload = function() {
         fetch('/fetch_formcampaigh_details')
@@ -152,25 +159,29 @@
             .catch(error => console.error('Error fetching details:', error));
     };
 
-function updateDonationInputs() {
+    function updateDonationInputs() {
         const count = parseInt(document.getElementById('donationCount').value, 10);
+        const qrImage = document.getElementById('qr');
 
         if (!isNaN(count) && count > 0) {
             const totalAmount = count * pricePerUnit;
             document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
 
+            qrImage.src = `https://promptpay.io/0993000067720/${totalAmount}`;
+            qrImage.style.display = 'block';
+
             if (cachedDetails) {
-                for (let i = 0; i < count; i++) {
-                }
+                for (let i = 0; i < count; i++) {}
             } else {
                 console.error('ยังไม่มีข้อมูลใน cachedDetails');
             }
         } else {
             document.getElementById('totalAmountDisplay').innerText = "0.00 บาท";
+            qrImage.style.display = 'none';
         }
     }
-	
-	function copyToClipboard(id) {
+
+    function copyToClipboard(id) {
         const inputField = document.getElementById(id);
 
         if (!inputField) {
@@ -189,30 +200,30 @@ function updateDonationInputs() {
     }
 
     function submitForm() {
-    const fileInput = document.getElementById('evidence');
+        const fileInput = document.getElementById('evidence');
 
-    if (fileInput.files.length === 0 || !allInputsFilled) {
-        swal({
-            title: "กรุณากรอกข้อมูลให้ครบ",
-            text: "คุณยังไม่ได้เลือกไฟล์ หรือกรอกข้อมูลในทุกช่อง กรุณาตรวจสอบอีกครั้ง",
-            icon: "warning",
-            button: "ตกลง"
-        });
-    } else {
-        swal({
-            title: "กำลังประมวลผล",
-            text: "กรุณารอสักครู่...",
-            icon: "info",
-            buttons: false,
-            closeOnClickOutside: false,
-            closeOnEsc: false
-        });
+        if (fileInput.files.length === 0 || !allInputsFilled) {
+            swal({
+                title: "กรุณากรอกข้อมูลให้ครบ",
+                text: "คุณยังไม่ได้เลือกไฟล์ หรือกรอกข้อมูลในทุกช่อง กรุณาตรวจสอบอีกครั้ง",
+                icon: "warning",
+                button: "ตกลง"
+            });
+        } else {
+            swal({
+                title: "กำลังประมวลผล",
+                text: "กรุณารอสักครู่...",
+                icon: "info",
+                buttons: false,
+                closeOnClickOutside: false,
+                closeOnEsc: false
+            });
 
-        setTimeout(() => {
-            document.getElementById("uploadForm").submit();
-        }, 1000); 
+            setTimeout(() => {
+                document.getElementById("uploadForm").submit();
+            }, 1000);
+        }
     }
-}
 </script>
 
 </html>
