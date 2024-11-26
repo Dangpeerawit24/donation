@@ -51,7 +51,8 @@
                             <h5 style="color: var(--bs-emphasis-color);font-weight: bold;">แนบหลักฐานการโอนเงิน</h5>
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="margin-top: 2px;"><input
-                                class="form-control" type="file" id="evidence" name="evidence" accept="image/*" required></div>
+                                class="form-control" type="file" id="evidence" name="evidence" accept="image/*"
+                                required></div>
                         <input type="hidden" id="campaignsid" name="campaignsid" value="{{ $data['campaign']->id }}">
                         <input type="hidden" id="campaignsname" name="campaignsname"
                             value="{{ $data['campaign']->name }}">
@@ -89,6 +90,10 @@
                 <div style="margin-top: 8px;">
                     <h4 style="color: var(--bs-body-color);font-weight: bold;">รายละเอียดการโอนเงิน</h4>
                 </div>
+                <div style="text-align: center; text-align: -webkit-center; margin-top: 10px;">
+                    <img id="qr" src="https://promptpay.io/0993000067720.png" width="150px" height="150px"
+                        alt="" style="display: none;">
+                </div>
                 <div style="text-align: center;">
                     <h5 style="color: var(--bs-emphasis-color);text-align: center;">💰มูลนิธิเมตตาธรรมรัศมี</h5>
                 </div>
@@ -99,8 +104,9 @@
                     <div class="row d-flex justify-content-center align-items-center"
                         style="margin-right: -12px;margin-top: 5px;">
                         <div class="col-8 d-flex justify-content-end justify-content-xl-center align-items-xl-center">
-                            <input class="form-control" type="text" id="accountNumber1" placeholder="171-1-75423-3"
-                                value="171-1-75423-3" style="text-align: center;" readonly>
+                            <input class="form-control" type="text" id="accountNumber1"
+                                placeholder="171-1-75423-3" value="171-1-75423-3" style="text-align: center;"
+                                readonly>
                             <button class="btn btn-secondary" onclick="copyToClipboard('accountNumber1')"
                                 style="margin-left: 10px;">คัดลอก</button>
                         </div>
@@ -185,11 +191,15 @@
         }
 
         const donationInputsContainer = document.getElementById('donationInputs');
+        const qrImage = document.getElementById('qr');
         donationInputsContainer.innerHTML = '';
 
         if (count > 0) {
             const totalAmount = count * pricePerUnit;
             document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
+
+            qrImage.src = `https://promptpay.io/0993000067720/${totalAmount}`;
+            qrImage.style.display = 'block';
 
             if (cachedDetails) {
                 for (let i = 0; i < count; i++) {
@@ -200,6 +210,7 @@
             }
         } else {
             document.getElementById('totalAmountDisplay').innerText = "0.00 บาท";
+            qrImage.style.display = 'none';
         }
     }
 

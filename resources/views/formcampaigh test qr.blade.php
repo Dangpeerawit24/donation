@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบกองบุญออนไลน์</title>
-    <link rel="icon" type="" href="{{asset('img/AdminLogo.png')}}" />
+    <link rel="icon" type="" href="{{ asset('img/AdminLogo.png') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
@@ -17,7 +17,7 @@
         <div class="container d-flex justify-content-center align-items-center" style="height: 60px;">
             <h1 class="d-flex justify-content-center align-items-center"
                 style="color: var(--bs-body-bg);font-size: 20.88px;margin: 8px;"><img width="40" height="40"
-                    src="{{asset('img/AdminLogo.png')}}">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</h1>
+                    src="{{ asset('img/AdminLogo.png') }}">ศาลพระโพธิสัตว์กวนอิมทุ่งพิชัย</h1>
         </div>
     </div>
     <div class="text-center">
@@ -33,7 +33,7 @@
         <div class="card" style="height: auto;">
             <div class="card-body">
                 <div>
-                    <form action="{{Route('formcampaigh.store')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ Route('formcampaigh.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="d-flex justify-content-start align-items-center">
                             <h4 style="color: var(--bs-body-color);font-weight: bold;">กรอกข้อมูลผู้ร่วมบุญ</h4>
@@ -53,14 +53,17 @@
                         <div class="d-flex justify-content-center align-items-center" style="margin-top: 2px;"><input
                                 class="form-control" type="file" id="evidence" name="evidence" required></div>
                         <input type="hidden" id="campaignsid" name="campaignsid" value="{{ $data['campaign']->id }}">
-                        <input type="hidden" id="campaignsname" name="campaignsname" value="{{ $data['campaign']->name }}">
+                        <input type="hidden" id="campaignsname" name="campaignsname"
+                            value="{{ $data['campaign']->name }}">
                         <input type="hidden" name="lineId" value="{{ $data['profile']['userId'] }}">
                         <input type="hidden" name="lineName" value="{{ $data['profile']['displayName'] }}">
-                        <input type="hidden" name="transactionID" value="TX-{{ now()->timestamp }}-{{ rand(1000, 9999) }}">
+                        <input type="hidden" name="transactionID"
+                            value="TX-{{ now()->timestamp }}-{{ rand(1000, 9999) }}">
                         <div class="d-flex justify-content-center align-items-center"
-                            style="margin-top: 12px;margin-bottom: px;"><button class="btn btn-primary"
-                                type="bottom" onclick="submitForm()">ยืนยันส่งข้อมูล</button></div>
-                    </form>@endforeach
+                            style="margin-top: 12px;margin-bottom: px;"><button class="btn btn-primary" type="bottom"
+                                onclick="submitForm()">ยืนยันส่งข้อมูล</button></div>
+                    </form>
+                    @endforeach
                 </div>
                 <div style="margin-top: 8px;">
                     <div class="row">
@@ -87,8 +90,9 @@
                     <h4 style="color: var(--bs-body-color);font-weight: bold;">รายละเอียดการโอนเงิน</h4>
                 </div>
                 <div style="text-align: center; text-align: -webkit-center; margin-top: 10px;">
-    <img id="qr" src="https://promptpay.io/1530300073236.png" width="150px" height="150px" alt="" style="display: none;">
-</div>
+                    <img id="qr" src="https://promptpay.io/1530300073236.png" width="150px" height="150px"
+                        alt="" style="display: none;">
+                </div>
                 <div style="text-align: center;  margin-top: 5px;">
                     <h5 style="color: var(--bs-emphasis-color);text-align: center;">💰มูลนิธิเมตตาธรรมรัศมี</h5>
                 </div>
@@ -99,8 +103,9 @@
                     <div class="row d-flex justify-content-center align-items-center"
                         style="margin-right: -12px;margin-top: 5px;">
                         <div class="col-8 d-flex justify-content-end justify-content-xl-center align-items-xl-center">
-                            <input class="form-control" type="text" id="accountNumber1" placeholder="171-1-75423-3"
-                                value="171-1-75423-3" style="text-align: center;" readonly>
+                            <input class="form-control" type="text" id="accountNumber1"
+                                placeholder="171-1-75423-3" value="171-1-75423-3" style="text-align: center;"
+                                readonly>
                             <button class="btn btn-secondary" onclick="copyToClipboard('accountNumber1')"
                                 style="margin-left: 10px;">คัดลอก</button>
                         </div>
@@ -160,39 +165,41 @@
 
         options += `<option value="new">เพิ่มรายการใหม่</option></select>`;
 
-        const newInput = `<input type="text" name="newName[]" id="newDonorName${index}" style="width: 100%; text-align: center; height: 45.4286px; display: none;" placeholder="ชื่อ-นามสกุล ${index + 1}" required>`;
+        const newInput =
+            `<input type="text" name="newName[]" id="newDonorName${index}" style="width: 100%; text-align: center; height: 45.4286px; display: none;" placeholder="ชื่อ-นามสกุล ${index + 1}" required>`;
 
-        inputDiv.innerHTML = `<label for="donorName${index}">กรอกข้อมูล ชุดที่ ${index + 1}</label>` + options + newInput;
+        inputDiv.innerHTML = `<label for="donorName${index}">กรอกข้อมูล ชุดที่ ${index + 1}</label>` + options +
+            newInput;
 
         document.getElementById('donationInputs').appendChild(inputDiv);
     }
 
     function updateDonationInputs() {
-    const count = parseInt(document.getElementById('donationCount').value, 10);
-    const donationInputsContainer = document.getElementById('donationInputs');
-    const qrImage = document.getElementById('qr');
-    donationInputsContainer.innerHTML = '';
+        const count = parseInt(document.getElementById('donationCount').value, 10);
+        const donationInputsContainer = document.getElementById('donationInputs');
+        const qrImage = document.getElementById('qr');
+        donationInputsContainer.innerHTML = '';
 
-    if (!isNaN(count) && count > 0) {
-        const totalAmount = count * pricePerUnit;
-        document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
+        if (!isNaN(count) && count > 0) {
+            const totalAmount = count * pricePerUnit;
+            document.getElementById('totalAmountDisplay').innerText = totalAmount.toFixed(2) + " บาท";
 
-        qrImage.src = `https://promptpay.io/1530300073236/${totalAmount}`;
-        qrImage.style.display = 'block';
+            qrImage.src = `https://promptpay.io/1530300073236/${totalAmount}`;
+            qrImage.style.display = 'block';
 
-        if (cachedDetails) {
-            for (let i = 0; i < count; i++) {
-                createInputFields(i);
+            if (cachedDetails) {
+                for (let i = 0; i < count; i++) {
+                    createInputFields(i);
+                }
+            } else {
+                console.error('ยังไม่มีข้อมูลใน cachedDetails');
             }
         } else {
-            console.error('ยังไม่มีข้อมูลใน cachedDetails');
+
+            document.getElementById('totalAmountDisplay').innerText = "0.00 บาท";
+            qrImage.style.display = 'none';
         }
-    } else {
-   
-        document.getElementById('totalAmountDisplay').innerText = "0.00 บาท";
-        qrImage.style.display = 'none';
     }
-}
 
 
     function checkNewEntry(select, index) {
@@ -200,7 +207,7 @@
         if (select.value === "new") {
             newInput.style.display = 'block';
             newInput.required = true;
-            newInput.value = ''; 
+            newInput.value = '';
         } else {
             newInput.style.display = 'none';
             newInput.required = false;
@@ -222,14 +229,14 @@
         return isValid;
     }
 
-    document.querySelector('form').addEventListener('submit', function (e) {
+    document.querySelector('form').addEventListener('submit', function(e) {
         if (!validateForm()) {
             e.preventDefault();
             swal("กรุณากรอกข้อมูลให้ครบถ้วน", "", "error");
         }
     });
-	
-	function copyToClipboard(id) {
+
+    function copyToClipboard(id) {
         const inputField = document.getElementById(id);
 
         if (!inputField) {
@@ -246,41 +253,40 @@
                 console.error("Error copying text: ", err);
             });
     }
-	
-	function submitForm() {
-    const fileInput = document.getElementById('evidence');
-    const donorInputs = document.querySelectorAll('[id^="donorName"], [id^="newDonorName"]');
 
-    const allInputsFilled = Array.from(donorInputs).every(input => {
-        if (input.style.display !== 'none') {
-            return input.value.trim() !== ""; 
+    function submitForm() {
+        const fileInput = document.getElementById('evidence');
+        const donorInputs = document.querySelectorAll('[id^="donorName"], [id^="newDonorName"]');
+
+        const allInputsFilled = Array.from(donorInputs).every(input => {
+            if (input.style.display !== 'none') {
+                return input.value.trim() !== "";
+            }
+            return true;
+        });
+
+        if (fileInput.files.length === 0 || !allInputsFilled) {
+            swal({
+                title: "กรุณากรอกข้อมูลให้ครบ",
+                text: "คุณยังไม่ได้เลือกไฟล์ หรือกรอกข้อมูลในทุกช่อง กรุณาตรวจสอบอีกครั้ง",
+                icon: "warning",
+                button: "ตกลง"
+            });
+        } else {
+            swal({
+                title: "กำลังประมวลผล",
+                text: "กรุณารอสักครู่...",
+                icon: "info",
+                buttons: false,
+                closeOnClickOutside: false,
+                closeOnEsc: false
+            });
+
+            setTimeout(() => {
+                document.getElementById("uploadForm").submit();
+            }, 1000);
         }
-        return true; 
-    });
-
-    if (fileInput.files.length === 0 || !allInputsFilled) {
-        swal({
-            title: "กรุณากรอกข้อมูลให้ครบ",
-            text: "คุณยังไม่ได้เลือกไฟล์ หรือกรอกข้อมูลในทุกช่อง กรุณาตรวจสอบอีกครั้ง",
-            icon: "warning",
-            button: "ตกลง"
-        });
-    } else {
-        swal({
-            title: "กำลังประมวลผล",
-            text: "กรุณารอสักครู่...",
-            icon: "info",
-            buttons: false,
-            closeOnClickOutside: false,
-            closeOnEsc: false
-        });
-
-        setTimeout(() => {
-            document.getElementById("uploadForm").submit();
-        }, 1000); 
     }
-}
-
 </script>
 
 
