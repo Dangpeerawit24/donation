@@ -41,6 +41,11 @@
                             @foreach ($transactions as $index => $transaction)
                                 <tr>
                                     <td style="text-align:center; align-content: center;">{{ $index + 1 }}</td>
+                                    @if ( $transaction->evidence == "")
+                                    <td style="text-align:center; align-content: center;">
+                                        จากดึงมือ
+                                    </td>
+                                    @else
                                     <td style="text-align:center; align-content: center;">
                                         <a href="#" data-toggle="modal" data-target="#imageModal"
                                             onclick="showImage('{{ asset('img/evidence/' . $transaction->evidence) }}')">
@@ -48,6 +53,7 @@
                                                 alt="หลักฐานการโอน">
                                         </a>
                                     </td>
+                                    @endif
                                     <td style="text-align:center; align-content: center;">
                                         {{ $transaction->details }}{{ $transaction->detailsbirthday }}{{ $transaction->detailstext }}
                                     </td>
@@ -97,7 +103,7 @@
     
                             <!-- ชื่อที่แสดง -->
                             <label for="lineName" class="form-label mt-3">ชื่อที่แสดง</label>
-                            <input type="text" class="form-control" id="lineName" name="lineName" placeholder="ระบุชื่อที่ต้องการแสดง" required>
+                            <input type="text" class="form-control" id="lineName" name="lineName" placeholder="ระบุชื่อที่แสดง" required>
     
                             <!-- ที่มา -->
                             <label for="form" class="form-label mt-3">ที่มา:</label>
