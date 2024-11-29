@@ -164,7 +164,11 @@
                 data.forEach(campaign => {
                     tableBody += `
                         <tr>
-                            <td style="text-align:left;">${campaign.name}</td>
+                            <td style="text-align:left;">
+                                <a href="/super-admin/campaigns_transaction?campaign_id=${campaign.id}&name=${campaign.name}">
+                                    ${campaign.name}
+                                </a>
+                            </td>
                             <td style="text-align:center;">${campaign.stock}</td>
                             <td style="text-align:center;">${campaign.total_donated}</td>
                             <td style="text-align:center;">${campaign.remaining_stock}</td>
