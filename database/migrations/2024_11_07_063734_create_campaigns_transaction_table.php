@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('campaignsname');
             $table->string('lineId');
             $table->string('lineName');
+            $table->string('form');
             $table->string('value');
             $table->text('details');
             $table->text('detailsbirthday');

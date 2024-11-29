@@ -61,6 +61,7 @@ Route::middleware(['auth', 'verified', 'super-admin'])->prefix('super-admin')->n
     Route::get('/api/dashboard-data', [DashboardController::class, 'getDashboardData'])->name('dashboard.data');
     Route::resource('/campaigns', CampaignController::class);
     Route::resource('/campaigns_transaction', CampaignTransactionController::class);
+    Route::get('/campaigns_transaction_success', [CampaignTransactionController::class, 'success']);
     Route::resource('/campaign_transaction_complete', CampaignTransactionComplete::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/categoriesdetails', CategoriesdetailsController::class);
