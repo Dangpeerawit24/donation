@@ -35,17 +35,21 @@ class WebhookController extends Controller
                 $userId = $event['source']['userId'] ?? null;
 
                 if ($userId) {
-                    // ดึงข้อมูลโปรไฟล์
-                    $profile = $this->getProfile($userId);
+                    try {
+                        // ดึงข้อมูลโปรไฟล์
+                        $profile = $this->getProfile($userId);
 
-                    if ($profile) {
-                        // เก็บข้อมูลในฐานข้อมูล
-                        $user = LineId::Create(
-                            ['userid' => $userId],
-                            ['name' => $profile['displayName']] // บันทึก displayName
-                        );
+                        if ($profile) {
+                            // เก็บข้อมูลในฐานข้อมูล
+                            $user = LineId::updateOrCreate(
+                                ['userid' => $userId],
+                                ['name' => $profile['displayName']]
+                            );
 
-                        Log::info('User Profile Saved:', ['user' => $user]);
+                            Log::info('User Profile Saved:', ['user' => $user]);
+                        }
+                    } catch (\Exception $e) {
+                        Log::error('Error processing webhook:', ['message' => $e->getMessage()]);
                     }
                 }
             }
