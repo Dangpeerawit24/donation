@@ -202,7 +202,7 @@ function fetchUsers(filter = 'month') { // ค่าเริ่มต้นเ�
             data.forEach(user => {
                 tableBody += `
                     <tr>
-                        <td style="text-align:left; vertical-align: middle; word-wrap: break-word;">${user.lineName}</td>
+                        <td style="text-align:left; vertical-align: middle; word-wrap: break-word;">${user.display_name}</td>
                         <td style="text-align:center;">${user.total_amount}</td>
                     </tr>
                 `;
