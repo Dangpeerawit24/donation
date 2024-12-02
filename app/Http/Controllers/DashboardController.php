@@ -113,11 +113,15 @@ class DashboardController extends Controller
                 }
             )
             ->select(
+                'campaign_transactions.lineId', // เพิ่ม lineId เพื่อจัดกลุ่ม
                 DB::raw('COALESCE(line_users.display_name, campaign_transactions.lineName) as display_name'),
-                DB::raw('SUM(campaign_transactions.value) as value'),
-                DB::raw('SUM(campaign_transactions.value * campaigns.price) as total_amount')
+                DB::raw('SUM(campaign_transactions.value) as total_value'), // รวม value ของ lineId ที่ตรงกัน
+                DB::raw('SUM(campaign_transactions.value * campaigns.price) as total_amount') // รวมยอดรวมของ price
             )
-            ->groupBy(DB::raw('COALESCE(line_users.display_name, campaign_transactions.lineName)'));
+            ->groupBy(
+                'campaign_transactions.lineId',
+                DB::raw('COALESCE(line_users.display_name, campaign_transactions.lineName)')
+            ); // จัดกลุ่มตาม lineId และ display_name
 
         // กรองข้อมูลตามตัวเลือก
         if ($filter === 'month') {
