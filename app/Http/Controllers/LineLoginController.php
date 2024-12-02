@@ -65,6 +65,7 @@ class LineLoginController extends Controller
     }
 
 
+
     public function showDashboard(Request $request)
     {
         // ตรวจสอบว่ามีข้อมูลโปรไฟล์ใน Session หรือไม่
