@@ -100,12 +100,14 @@ class DashboardController extends Controller
 
         $query = DB::table('campaign_transactions')
             ->join('campaigns', 'campaign_transactions.campaignsid', '=', 'campaigns.id')
+            ->leftJoin('line_users', 'campaign_transactions.lineId', '=', 'line_users.user_id')
             ->select(
-                'campaign_transactions.lineName',
+                DB::raw('COALESCE(line_users.display_name, campaign_transactions.lineName) as display_name'),
                 DB::raw('SUM(campaign_transactions.value) as value'),
                 DB::raw('SUM(campaign_transactions.value * campaigns.price) as total_amount')
             )
-            ->groupBy('campaign_transactions.lineName');
+            ->groupBy(DB::raw('COALESCE(line_users.display_name, campaign_transactions.lineName)'));
+
 
         // กรองข้อมูลตามตัวเลือก
         if ($filter === 'month') {

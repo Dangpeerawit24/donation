@@ -149,4 +149,28 @@
             document.getElementById('modalImage').src = src;
         }
     </script>
+    
+<script>
+    document.getElementById('confirmAction').addEventListener('click', function(event) {
+        event.preventDefault(); // ป้องกันไม่ให้ลิงก์ทำงานทันที
+    
+        const url = this.getAttribute('data-url'); // ดึง URL จาก data attribute
+    
+        Swal.fire({
+            title: 'ยืนยันการดำเนินการ',
+            text: "คุณต้องการเคลียร์รายการปริ้นแล้วหรือไม่?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ใช่, ดำเนินการ!',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // ถ้าผู้ใช้กด "ยืนยัน"
+                window.location.href = url; // Redirect ไปยัง URL
+            }
+        });
+    });
+    </script>
 @endSection
