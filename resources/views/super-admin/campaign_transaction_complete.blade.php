@@ -40,8 +40,9 @@
                                         <img src="{{ asset('img/evidence/' . $transaction->evidence) }}" height="100px" alt="หลักฐานการโอน">
                                     </a>
                                 </td>
-                                <td style="text-align:center; align-content: center;">{{ $transaction->details }}{{ $transaction->detailsbirthday }}{{ $transaction->detailstext }}</td>
-                                <td style="text-align:center; align-content: center;">{{ $transaction->value }}</td>
+                                <td style="text-align:center; align-content: center;">
+                                    {{ $transaction->details }}{{ $transaction->details2 }}{{ $transaction->detailsbirthday }}{{ $transaction->detailstext }}
+                                </td><td style="text-align:center; align-content: center;">{{ $transaction->value }}</td>
                                 <td style="text-align:center; align-content: center;">{{ $transaction->lineName }}</td>
                                 <td style="text-align:center; align-content: center;">A</td>
                                 <td style="text-align:center; align-content: center;">{{ $transaction->qr_url }}</td>

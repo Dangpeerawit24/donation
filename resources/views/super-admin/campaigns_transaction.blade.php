@@ -15,10 +15,10 @@
                 class="btn btn-danger">
                 รายการที่ดำเนินการแล้ว
             </a>
-            <a href="#" class="btn btn-success" id="confirmAction"
+            {{-- <a href="#" class="btn btn-success" id="confirmAction"
                 data-url="{{ url('super-admin/campaigns_transaction_success?campaign_id=' . $campaignId) }}">
                 เคลียร์รายการปริ้นแล้ว
-            </a>
+            </a> --}}
         </div>
     </div>
     <div class="app-content">
