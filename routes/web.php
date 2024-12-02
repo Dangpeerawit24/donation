@@ -21,6 +21,7 @@ use App\Http\Controllers\FormcampaightextController;
 use App\Http\Controllers\FormcampaighallController;
 use App\Http\Controllers\FormcampaighgiveController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\WebhookController;
 
 Route::get('/login', [AuthenticatedSessionController::class, 'store']);
 // Route::get('/login', function () { return view('auth.login');});
@@ -29,6 +30,7 @@ Route::get('/login', [AuthenticatedSessionController::class, 'store']);
 
 
 // Line App
+Route::post('/webhook', [WebhookController::class, 'handle']);
 Route::get('/line/login', [LineLoginController::class, 'redirectToLine'])->name('line.login');
 Route::get('/line/callback', [LineLoginController::class, 'handleLineCallback'])->name('line.callback');
 Route::get('/', [LineLoginController::class, 'showDashboard'])->name('welcome');
