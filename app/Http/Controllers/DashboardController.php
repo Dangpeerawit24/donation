@@ -95,51 +95,46 @@ class DashboardController extends Controller
     }
 
     public function getActiveuser(Request $request)
-    {
-        $filter = $request->input('filter', 'month'); // ค่าเริ่มต้นเป็น 'month'
+{
+    $filter = request('filter', 'month'); // ค่าเริ่มต้นเป็น 'month'
 
-        // สร้าง Query เบื้องต้น
-        $query = DB::table('campaign_transactions')
-            ->join('campaigns', 'campaign_transactions.campaignsid', '=', 'campaigns.id')
-            ->leftJoin('line_users', 'campaign_transactions.lineId', '=', 'line_users.user_id')
-            ->joinSub(
-                DB::table('campaign_transactions')
-                    ->select('lineId', DB::raw('MAX(id) as latest_id')) // ใช้ MAX(id) หรือ MAX(created_at) หา record ล่าสุด
-                    ->groupBy('lineId'),
-                'latest_transactions',
-                function ($join) {
-                    $join->on('campaign_transactions.lineId', '=', 'latest_transactions.lineId')
-                        ->on('campaign_transactions.id', '=', 'latest_transactions.latest_id'); // เชื่อมกับ id ล่าสุด
-                }
-            )
-            ->select(
-                'campaign_transactions.lineId', // เพิ่ม lineId เพื่อจัดกลุ่ม
-                DB::raw('COALESCE(line_users.display_name, campaign_transactions.lineName) as display_name'),
-                DB::raw('SUM(campaign_transactions.value) as total_value'), // รวม value ของ lineId ที่ตรงกัน
-                DB::raw('SUM(campaign_transactions.value * campaigns.price) as total_amount') // รวมยอดรวมของ price
-            )
-            ->groupBy(
-                'campaign_transactions.lineId',
-                DB::raw('COALESCE(line_users.display_name, campaign_transactions.lineName)')
-            ); // จัดกลุ่มตาม lineId และ display_name
+    // สร้าง subquery เพื่อหา latest_created_at ของแต่ละ lineId
+    $subQuery = DB::table('campaign_transactions as sub')
+        ->select('sub.lineId', DB::raw('MAX(sub.created_at) as latest_created_at')) // เอาเฉพาะ lineId และ created_at ล่าสุด
+        ->groupBy('sub.lineId');
 
-        // กรองข้อมูลตามตัวเลือก
-        if ($filter === 'month') {
-            $query->whereBetween('campaign_transactions.created_at', [
-                Carbon::now()->startOfMonth(),
-                Carbon::now()->endOfMonth(),
-            ]);
-        } elseif ($filter === 'year') {
-            $query->whereBetween('campaign_transactions.created_at', [
-                Carbon::now()->startOfYear(),
-                Carbon::now()->endOfYear(),
-            ]);
-        }
+    $query = DB::table('campaign_transactions')
+        ->joinSub($subQuery, 'latest_names', function ($join) {
+            $join->on('campaign_transactions.lineId', '=', 'latest_names.lineId')
+                 ->on('campaign_transactions.created_at', '=', 'latest_names.latest_created_at');
+        })
+        ->join('campaigns', 'campaign_transactions.campaignsid', '=', 'campaigns.id')
+        ->leftJoin('line_users', 'campaign_transactions.lineId', '=', 'line_users.user_id') // Join กับตาราง line_users
+        ->select(
+            DB::raw('COALESCE(MAX(line_users.display_name), MAX(campaign_transactions.lineName)) as name'), // ใช้ MAX เพื่อปรับให้รองรับ only_full_group_by
+            DB::raw('SUM(campaign_transactions.value) as value'),
+            DB::raw('SUM(campaign_transactions.value * campaigns.price) as total_amount')
+        )
+        ->groupBy('campaign_transactions.lineId'); // Group by lineId ซึ่งเป็นคีย์หลัก
 
-        // สั่งให้ query เรียงลำดับข้อมูลและดึงข้อมูล
-        $users = $query->orderBy('total_amount', 'desc')->get();
-
-        // ส่งข้อมูลเป็น JSON response
-        return response()->json($users);
+    // กรองข้อมูลตามตัวเลือก
+    if ($filter === 'month') {
+        $query->whereBetween('campaign_transactions.created_at', [
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth(),
+        ]);
+    } elseif ($filter === 'year') {
+        $query->whereBetween('campaign_transactions.created_at', [
+            Carbon::now()->startOfYear(),
+            Carbon::now()->endOfYear(),
+        ]);
     }
+
+    // หากเลือก "all" ไม่ต้องกรองวันที่
+
+    $users = $query->orderBy('total_amount', 'desc')->get();
+
+    return response()->json($users);
+}
+
 }
