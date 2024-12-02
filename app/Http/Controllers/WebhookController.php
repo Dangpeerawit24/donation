@@ -27,34 +27,34 @@ class WebhookController extends Controller
     }
 
     public function handle(Request $request)
-    {
-        Log::info('Webhook Received:', $request->all());
+{
+    Log::info('Webhook Received:', $request->all());
 
-        if ($request->has('events')) {
-            foreach ($request->input('events') as $event) {
-                $userId = $event['source']['userId'] ?? null;
+    if ($request->has('events')) {
+        foreach ($request->input('events') as $event) {
+            $userId = $event['source']['userId'] ?? null;
 
-                if ($userId) {
-                    try {
-                        // ดึงข้อมูลโปรไฟล์
-                        $profile = $this->getProfile($userId);
+            if ($userId) {
+                try {
+                    // ดึงโปรไฟล์ผู้ใช้
+                    $profile = $this->getProfile($userId);
 
-                        if ($profile) {
-                            // เก็บข้อมูลในฐานข้อมูล
-                            $user = LineId::updateOrCreate(
-                                ['userid' => $userId],
-                                ['name' => $profile['displayName']]
-                            );
-
-                            Log::info('User Profile Saved:', ['user' => $user]);
-                        }
-                    } catch (\Exception $e) {
-                        Log::error('Error processing webhook:', ['message' => $e->getMessage()]);
+                    if ($profile) {
+                        // บันทึกข้อมูลผู้ใช้
+                        $user = LineId::updateOrCreate(
+                            ['userid' => $userId],
+                            ['name' => $profile['displayName']]
+                        );
+                        Log::info('User Profile Saved:', ['user' => $user]);
                     }
+                } catch (\Exception $e) {
+                    Log::error('Error processing webhook:', ['message' => $e->getMessage()]);
                 }
             }
         }
-
-        return response()->json(['status' => 'success'], 200);
     }
+
+    return response()->json(['status' => 'success'], 200);
+}
+
 }
