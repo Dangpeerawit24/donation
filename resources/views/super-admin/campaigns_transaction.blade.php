@@ -55,7 +55,7 @@
                                     </td>
                                     @endif
                                     <td style="text-align:center; align-content: center;">
-                                        {{ $transaction->details }}{{ $transaction->detailsbirthday }}{{ $transaction->detailstext }}
+                                        {{ $transaction->details }}{{ $transaction->details2 }}{{ $transaction->detailsbirthday }}{{ $transaction->detailstext }}
                                     </td>
                                     <td style="text-align:center; align-content: center;">{{ $transaction->value }}</td>
                                     <td style="text-align:center; align-content: center;">{{ $transaction->lineName }}</td>
@@ -114,9 +114,11 @@
                             </select>
     
                             <!-- Hidden Fields -->
-                            <input type="hidden" class="form-control" id="transactionID" name="transactionID" value="กองบุญจากดึงมือ" required>
+                            <input type="hidden" name="transactionID"
+                            value="TX-{{ now()->timestamp }}-{{ rand(1000, 9999) }}">
                             <input type="hidden" class="form-control" id="status" name="status" value="รอดำเนินการ" required>
                             <input type="hidden" class="form-control" id="campaignsid" name="campaignsid" value="{{ $campaignId }}" required>
+                            <input type="hidden" class="form-control" id="campaignsname" name="campaignsname" value="{{ $name }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">
