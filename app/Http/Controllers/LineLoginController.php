@@ -57,13 +57,22 @@ class LineLoginController extends Controller
 
         $profile = $profileResponse->json();
 
+        function removeEmojis($string)
+        {
+            return preg_replace('/[\x{1F600}-\x{1F64F}|\x{1F300}-\x{1F5FF}|\x{1F680}-\x{1F6FF}|\x{1F1E6}-\x{1F1FF}|\x{2600}-\x{26FF}|\x{2700}-\x{27BF}|\x{FE00}-\x{FE0F}|\x{1F900}-\x{1F9FF}|\x{1FA70}-\x{1FAFF}|\x{200D}|\x{20E3}|\x{0023}-\x{0039}\x{FE0F}\x{20E3}]/u', '', $string);
+        }
+
+        // ลบอิโมจิออกจากชื่อผู้ใช้
+        if (isset($profile['displayName'])) {
+            $profile['displayName'] = removeEmojis($profile['displayName']);
+        }
+
         // เก็บข้อมูลโปรไฟล์ใน Session
         $request->session()->put('profile', $profile);
 
         // เปลี่ยนเส้นทางไปหน้า Dashboard
         return redirect()->route('welcome');
     }
-
 
 
     public function showDashboard(Request $request)
