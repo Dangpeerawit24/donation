@@ -78,7 +78,7 @@ class CampaignTransactionController extends Controller
             'campaignsid' => 'required',
         ]);
 
-        $lineName = $request->input('lineName');
+        $lineName = $request['lineName'];
 
         // ค้นหา userid จากตาราง lineid
         $lineId = DB::table('line_users')
