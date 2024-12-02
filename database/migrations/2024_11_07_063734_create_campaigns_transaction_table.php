@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('form');
             $table->string('value');
             $table->text('details');
+            $table->text('details2');
             $table->text('detailsbirthday');
             $table->text('detailstext');
             $table->string('evidence');

@@ -6,7 +6,8 @@ use App\Models\Campaign_transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 
 class CampaignTransactionController extends Controller
 {
@@ -76,8 +77,54 @@ class CampaignTransactionController extends Controller
             'status' => 'required',
             'campaignsid' => 'required',
         ]);
-        campaign_transaction::create($request->all());
-        return redirect()->back()->with('success', 'เพิ่มข้อมูล หัวข้อกองบุญ เรียบร้อยแล้ว.');
+
+        $lineName = $request->input('lineName');
+
+        // ค้นหา userid จากตาราง lineid
+        $lineId = DB::table('lineid')
+            ->where('lineName', $lineName)
+            ->value('userid'); // ดึงเฉพาะคอลัมน์ userid
+
+        // สร้างข้อมูลสำหรับ QR Code
+        $qrData = env('APP_URL') . "/pushevidence?transactionID={$request['transactionID']}";
+
+        $qrFolder = public_path('img/qr-codes/');
+        if (!is_dir($qrFolder)) {
+            mkdir($qrFolder, 0777, true);
+        }
+
+        $qrFileName = 'qrcode_' . time() . '.png';
+        $qrFilePath = $qrFolder . $qrFileName;
+
+        // ใช้ Endroid\QrCode สร้าง QR Code
+        $qrCode = new QrCode($qrData);
+        $qrCode->setSize(300);
+
+        $writer = new PngWriter();
+        $result = $writer->write($qrCode);
+
+        // บันทึก QR Code เป็นไฟล์
+        $result->saveToFile($qrFilePath);
+
+        // ใช้ APP_URL สำหรับเก็บ Path ของ QR Code
+        $qrUrl = env('APP_URL') . '/img/qr-codes/' . $qrFileName;
+
+        DB::table('campaign_transactions')->insert([
+            'campaignsid' => $request['campaignsid'],
+            'campaignsname' => $request['campaignsname'],
+            'lineId' => $lineId,
+            'lineName' => $request['lineName'],
+            'value' => $request['value'],
+            'details2' => $request['details'],
+            'form' => $request['form'],
+            'transactionID' => $request['transactionID'],
+            'qr_url' => $qrUrl, // เก็บ path ของ QR Code
+            'status' => "รอดำเนินการ",
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'เพิ่มข้อมูล เรียบร้อยแล้ว.');
     }
 
     /**
