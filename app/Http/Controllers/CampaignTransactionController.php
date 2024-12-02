@@ -81,8 +81,8 @@ class CampaignTransactionController extends Controller
         $lineName = $request->input('lineName');
 
         // ค้นหา userid จากตาราง lineid
-        $lineId = DB::table('lineid')
-            ->where('lineName', $lineName)
+        $lineId = DB::table('line_users')
+            ->where('display_name', $lineName)
             ->value('userid'); // ดึงเฉพาะคอลัมน์ userid
 
         // สร้างข้อมูลสำหรับ QR Code
