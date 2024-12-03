@@ -83,7 +83,7 @@ class CampaignTransactionController extends Controller
         // ค้นหา userid จากตาราง lineid
         $lineId = DB::table('line_users')
             ->where('display_name', $lineName)
-            ->value(DB::raw('COALESCE(user_id, "' . $lineName . '")'));
+            ->value('user_id') ?? $lineName; // ถ้าไม่มี user_id ให้ใช้ $lineName
 
         // สร้างข้อมูลสำหรับ QR Code
         $qrData = env('APP_URL') . "/pushevidence?transactionID={$request['transactionID']}";
