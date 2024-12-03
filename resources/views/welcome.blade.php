@@ -14,21 +14,31 @@
         .spinner {
             width: 200px;
             height: 200px;
-            animation: spin 2s linear infinite; 
+            animation: spin 2s linear infinite;
         }
-    
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rounded-image {
+            border-radius: 15px;
+            /* หรือ 50% หากต้องการรูปภาพเป็นวงกลม */
         }
     </style>
 </head>
 
 <body class="bg-gray-300	">
     <div id="loader" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-        <img src="{{asset('img/loading.png')}}" alt="Loading..." class="spinner">
+        <img src="{{ asset('img/loading.png') }}" alt="Loading..." class="spinner">
     </div>
-    
+
 
     <div class="row w-full h-20 fixed top-0 bg-red-950 content-center justify-items-center">
         <nav class="flex items-center	">
@@ -101,10 +111,15 @@
     <script>
         @if (session('success'))
             Swal.fire({
-                icon: 'success',
+                imageUrl: '{{ asset('img/ขออนุโมทนาบุญ.png') }}',
+                customClass: {
+                    image: 'rounded-image' // ชื่อ class CSS
+                },
+                imageWidth: 300,
+                imageHeight: 300,
                 title: 'ขออนุโมทนาบุญกับ<br>คุณ{{ session('lineName') }}',
-                html: 'ที่ได้ร่วมกองบุญ<br>{{ session('campaignname') }}',
-                timer: 5000,
+                html: 'ที่ได้ร่วมกองบุญ{{ session('campaignname') }}',
+                // timer: 5000,
                 showConfirmButton: false
             });
         @endif
@@ -123,7 +138,7 @@
         });
 
         window.addEventListener('pageshow', function(event) {
-          
+
             document.getElementById('loader').classList.add('hidden');
         });
 
