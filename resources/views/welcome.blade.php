@@ -119,7 +119,7 @@
                 imageHeight: 300,
                 title: 'ขออนุโมทนาบุญกับ<br>คุณ{{ session('lineName') }}',
                 html: 'ที่ได้ร่วมกองบุญ{{ session('campaignname') }}',
-                // timer: 5000,
+                timer: 5000,
                 showConfirmButton: false
             });
         @endif
