@@ -48,7 +48,7 @@
                     @foreach ($Datas as $Data)
                         <tr class="border-b border-neutral-200 dark:border-white/10">
                             <td class="whitespace-wrap text-lg  py-3 font-medium">กองบุญ{{ $Data->campaignsname }}<br>รายนาม:
-                                {{ $Data->details }}{{ $Data->detailsbirthday }}{{ $Data->detailstext }}</td>
+                                {{ $Data->details }}{{ $Data->details2 }}{{ $Data->detailsbirthday }}{{ $Data->detailstext }}</td>
                             <td class="whitespace-nowrap  py-3 text-center">
                                 @if ($Data->status == 'ส่งภาพกองบุญแล้ว')
                                     <a href="campaignstatusimg?url_img={{ $Data->url_img }}&campaignsname={{ $Data->campaignsname }}"
