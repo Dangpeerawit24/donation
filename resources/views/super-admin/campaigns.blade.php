@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                             <div class="mb-3 mt-1">
-                                <label for="" class="form-label">ชื่กองบุญ</label>
+                                <label for="" class="form-label">ชื่อกองบุญ</label>
                                 <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="mb-3">
@@ -182,7 +182,7 @@
                                     id="description2" 
                                     name="description" 
                                     rows="4" 
-                                    maxlength="250" 
+                                    maxlength="500" 
                                     required
                                 ></textarea>
                                 <div id="charCount" class="form-text">เหลือ 250 ตัวอักษร</div>
