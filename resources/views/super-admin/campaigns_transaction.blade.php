@@ -40,7 +40,9 @@
                         <tbody>
                             @foreach ($transactions as $index => $transaction)
                                 <tr>
-                                    <td style="text-align:center; align-content: center;">{{ $index + 1 }}</td>
+                                    <td style="text-align:center; align-content: center;">
+                                        <a href="https://donation.kuanimtungpichai.com/pin?transactionID={{ $transaction->transactionID }}">{{ $transaction->transactionID }}</a>
+                                    </td>
                                     @if ( $transaction->evidence == "")
                                     <td style="text-align:center; align-content: center;">
                                         จากดึงมือ
