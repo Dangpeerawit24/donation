@@ -37,6 +37,24 @@ class PushevidenceController extends Controller
         ]);
     }
 
+    public function index2(Request $request)
+    {
+        // รับค่าจาก Query String
+        $transactionID = $request->query('transactionID');
+        
+        if (!$transactionID) {
+            return redirect()->back()->with('error', 'ข้อมูลไม่ครบถ้วน');
+        }
+
+        $namess = DB::table('campaign_transactions')
+            ->where('transactionID', $transactionID)
+            ->get();
+
+        return view('pushevidence', [
+            'names' => $namess,
+            'transactionID' => $transactionID,
+        ]);
+    }
 
     public function pushevidencetouser(Request $request)
     {

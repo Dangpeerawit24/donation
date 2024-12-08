@@ -48,6 +48,7 @@ Route::get('/fetch_formcampaighall_details', [FormcampaighallController::class, 
 Route::resource('/formcampaighgive', FormcampaighgiveController::class);
 // Line Push Evidence
 Route::get('/pushevidence', [PushevidenceController::class, 'index'])->name('pushevidence.index');
+Route::get('/pushevidence2', [PushevidenceController::class, 'index2'])->name('pushevidence2.index');
 // Route::get('/pushevidence', [PushevidenceController::class, 'index'])->name('pushevidence.index');
 Route::post('/pushevidencetouser', [PushevidenceController::class, 'pushevidencetouser'])->name('pushevidencetouser');
 Route::get('/pin', [PinController::class, 'showForm'])->name('pin.form');
