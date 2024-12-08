@@ -52,7 +52,7 @@ class CampaignTransactionController extends Controller
         // ค้นหาและอัปเดตข้อมูลในตาราง campaign_transactions
         $updatedRows = DB::table('campaign_transactions')
             ->where('campaignsid', $campaignId) // เช็คว่า campaignsid ตรงกับ campaignId
-            ->whereIn('form', ['L', 'IB', 'P']) // form ต้องเป็น L, IB, หรือ P
+            ->whereIn('form', ['IB', 'P']) // form ต้องเป็น IB, หรือ P
             ->update(['status' => 'ส่งภาพกองบุญแล้ว']); // อัปเดต status
 
         // ตรวจสอบผลลัพธ์การอัปเดต
