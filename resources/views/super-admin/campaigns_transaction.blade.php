@@ -41,7 +41,7 @@
                             @foreach ($transactions as $index => $transaction)
                                 <tr>
                                     <td style="text-align:center; align-content: center;">
-                                        <a href="https://donation.kuanimtungpichai.com/pin?transactionID={{ $transaction->transactionID }}" target="_blank">{{ $transaction->transactionID }}</a>
+                                        <a href="https://donation.kuanimtungpichai.com/pushevidence2?transactionID={{ $transaction->transactionID }}" target="_blank">{{ $transaction->transactionID }}</a>
                                     </td>
                                     @if ( $transaction->evidence == "")
                                     <td style="text-align:center; align-content: center;">
