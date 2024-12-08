@@ -50,7 +50,7 @@ class PushevidenceController extends Controller
             ->where('transactionID', $transactionID)
             ->get();
 
-        return view('pushevidence', [
+        return view('pushevidence2', [
             'names' => $namess,
             'transactionID' => $transactionID,
         ]);
